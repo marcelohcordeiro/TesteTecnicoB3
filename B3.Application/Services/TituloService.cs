@@ -78,7 +78,9 @@ namespace B3.Application.Services
             return simulacao;
         }
 
-
-
+        public async Task<List<Titulo>> GetTitulosRendaFixa()
+        {
+            return await _tituloRepository.GetTitulosRendaFixa();
+        }
     }
 }

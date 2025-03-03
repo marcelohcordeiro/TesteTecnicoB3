@@ -8,7 +8,7 @@ import { Simulacao } from '../types/simulacao.type';
 export class TituloService {
   constructor(private httpClient: HttpClient) {}
 
-  protected UrlServiceV1: string = 'https://localhost:5175/titulo/';
+  protected UrlServiceV1: string = 'https://localhost:5175/titulo/renda-fixa';
 
   getTitulos(): Observable<Titulo[]> {
     return this.httpClient.get<Titulo[]>(this.UrlServiceV1);

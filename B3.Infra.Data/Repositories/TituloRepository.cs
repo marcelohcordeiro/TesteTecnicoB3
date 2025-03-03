@@ -17,12 +17,19 @@ namespace B3.Infra.Data.Repositories
 
         public async Task<Titulo> GetTituloById(Guid id)
         {
-            return await _context.Titulos.Include(x => x.Indexador).Include(x => x.TipoTitulo).FirstAsync(x => x.IdTitulo == id);
+            return await _context.Titulos!.Include(x => x.Indexador).Include(x => x.TipoTitulo).FirstAsync(x => x.IdTitulo == id);
         }
 
         public async Task<List<Titulo>> GetTitulos()
         {
-            return await _context.Titulos.Include(x => x.Indexador).Include(x => x.TipoTitulo).ToListAsync();
+            return await _context.Titulos!.Include(x => x.Indexador).Include(x => x.TipoTitulo).ToListAsync();
+        }
+
+        public async Task<List<Titulo>> GetTitulosRendaFixa()
+        {
+            var x = await _context.Titulos!.Include(x => x.Indexador).Include(x => x.TipoTitulo).Where(x => x.TipoTitulo!.RendaFixa).ToListAsync();
+            return x;
+
         }
     }
 }

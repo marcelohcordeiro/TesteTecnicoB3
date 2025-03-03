@@ -35,12 +35,30 @@ namespace B3.Application.WebApi.Controllers
         }
 
         
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetTituloById(Guid id)
         {
             try
             {
                 var titulo = await _tituloService.GetTituloById(id);
+                return Ok(titulo);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Aconteceu um erro ao tentar carregar os titulos: " + ex.Message);
+            }
+
+
+        }
+
+
+        [HttpGet("renda-fixa")]
+        public async Task<IActionResult> GetTitulosRendaFixa()
+        {
+            try
+            {
+                var titulo = await _tituloService.GetTitulosRendaFixa();
                 return Ok(titulo);
             }
             catch (Exception ex)

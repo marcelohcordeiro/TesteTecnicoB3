@@ -9,5 +9,6 @@ namespace B3.Domain.Interfaces
         Task<Titulo> GetTituloById(Guid id);
         Task<SimulacaoTituloViewModel> GetSimularTitulo(Guid id, float valorInicial, float valorAporteMensal, int qtdeMesesInvestimento);
         Task<SimulacaoTituloViewModel> CalcularSimulacaoTitulo(Guid id, float valorInicial, float valorAporteMensal, int qtdeMesesInvestimento);
+        Task<List<Titulo>> GetTitulosRendaFixa();
     }
 }

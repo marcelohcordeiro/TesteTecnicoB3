@@ -6,6 +6,7 @@ namespace B3.Domain.Interfaces
     {
 
         Task<List<Titulo>> GetTitulos();
+        Task<List<Titulo>> GetTitulosRendaFixa();
         Task<Titulo> GetTituloById(Guid id);
 
 
