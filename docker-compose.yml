@@ -1,0 +1,39 @@
+services:
+  b3.webapi:
+    image: ${DOCKER_REGISTRY-}b3webapi
+    build:
+      context: .
+      dockerfile: B3.WebApi/Dockerfile
+    depends_on:
+      - b3.database
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:8080;https://0.0.0.0:8081
+      - ConnectionStrings__DefaultConnection=Server=host.docker.internal,1433;Database=TesteTecnicoB3;User Id=sa;Password=B3@testetecnico;Integrated security=False;trusted_connection=false;Persist Security Info=False;Encrypt=False;
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+
+  b3.application.frontend:
+    image: ${DOCKER_REGISTRY-}b3frontend
+    build:
+      context: .
+      dockerfile: B3.Application.FrontEnd/Dockerfile
+    depends_on:
+      - b3.webapi
+    ports:
+      - "4200:80"
+      
+
+  b3.database:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - SA_PASSWORD=B3@testetecnico
+      - ACCEPT_EULA=Y
+    ports:
+      - "1433:1433"
+    volumes:
+      - mssql_data:/var/opt/mssql
+
+volumes:
+  mssql_data:

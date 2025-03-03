@@ -1,0 +1,92 @@
+<div class="">
+  @if(!simulacao){
+  <h4>Lista de títulos</h4>
+  <div class="titulo-grid">
+
+
+    @for(tit of titulos; track tit){
+    <div class="titulo-container">
+      <p class="titulo-nome">{{tit.nomeTitulo}}</p>
+      <span class="titulo-taxa">{{tit.posFixado? tit.taxaRendimento + '% ' + tit.indexador.descricao : tit.taxaRendimento + '% PRE' }} a.a</span>
+      <p class="titulo-tipo">{{tit.tipoTitulo.descricao}}</p>
+      <button class="btnSimular" (click)="ativarSimulacao(tit)">SIMULAR INVESTIMENTO</button>
+    </div>
+    }
+
+  </div>
+  } @else {
+  <span class="simulacao-voltar" (click)="sairSimulacao()">
+    < Voltar</span>
+
+      <div class=" simulacao-container">
+        <div class="simulacao-form-container">
+          <p class="simulacao-titulo-nome">{{tituloCurrent.nomeTitulo}}</p>
+          <p class="simulacao-titulo-taxa">{{tituloCurrent.posFixado? tituloCurrent.taxaRendimento + '% ' + tituloCurrent.indexador.descricao : tituloCurrent.taxaRendimento + '% PRE' }} a.a</p>
+          <form novalidate (ngSubmit)="simularInvestimento()" [formGroup]="simulacaoForm">
+            <div class="form-input-container">
+              <label for="valorInicial">Valor Inicial</label>
+              <input type="text" formControlName="valorInicial" placeholder="Digite o Valor Inicial do investimento" />
+            </div>
+            <div class="form-input-container">
+              <label for="valorAporteMensal">Aporte Mensal:</label>
+              <input type="text" formControlName="valorAporteMensal" placeholder="Digite o Valor de Aporte Mensal" />
+            </div>
+            <div class="form-input-container">
+              <label for="quantidadeMeses">Quantidade de Meses</label>
+              <input type="string" formControlName="quantidadeMeses" placeholder="Digite a quantidade de Meses do investimento" />
+            </div>
+            <div>
+              <button class="btnSimular">CALCULAR SIMULAÇÃO</button>
+            </div>
+
+          </form>
+        </div>
+        <div class="simulacao-result-container">
+          @if(mostrarResultadoSimulacao){
+          <!-- <app-resultado-simulacao idTitulo={{tituloCurrent.idTitulo}} valorInicial={{simulacaoForm.value.valorInicial}} valorAporteMensal={{simulacaoForm.value.valorAporteMensal}} quantidadeMeses={{simulacaoForm.value.quantidadeMeses}} [mostrarResultadoSimulacao]=mostrarResultadoSimulacao></app-resultado-simulacao> -->
+
+
+          @if(resultadoSimulacao){
+          <div class="simulacao-result-table">
+            <p class="simulacao-result-attribute">
+              Valor Bruto:
+            </p>
+            <p class="simulacao-result-value">
+              {{resultadoSimulacao.valorTotalBruto | currency: 'BRL'}}
+            </p>
+            <p class="simulacao-result-attribute">
+              Valor Total Investido:
+            </p>
+            <p class="simulacao-result-value">
+              {{resultadoSimulacao.valorTotalInvestido | currency: 'BRL'}}
+            </p>
+            <p class="simulacao-result-attribute">
+              Valor Rendimentos:
+            </p>
+            <p class="simulacao-result-value">
+              {{resultadoSimulacao.valorRendimento| currency: 'BRL'}}
+            </p>
+            <p class="simulacao-result-attribute">
+              Desconto(I.R.):
+            </p>
+            <p class="simulacao-result-value">
+              {{resultadoSimulacao.valorDescontoImpostoRenda | currency: 'BRL'}}
+            </p>
+            <p class="simulacao-result-attribute ">
+              Valor Líquido:
+            </p>
+            <p class="simulacao-result-value liquido-value">
+              {{resultadoSimulacao.valorTotalLiquido | currency: 'BRL'}}
+            </p>
+          </div>
+
+          }
+          }
+
+        </div>
+      </div>
+
+      }
+
+
+</div>

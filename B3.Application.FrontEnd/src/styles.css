@@ -1,0 +1,244 @@
+/* You can add global styles to this file, and also import other style files */
+/* You can add global styles to this file, and also import other style files */
+
+.main-container {
+  padding-top: 100px;
+  padding-right: 15px;
+  padding-left: 15px;
+  padding-bottom: 100px;
+  margin-right: auto;
+  margin-left: auto;
+  overflow: hidden;
+}
+
+.footer {
+  height: 50px;
+  text-align: center;
+  background-color: #002c63;
+}
+
+.home-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.home-content {
+  display: inline-block;
+  justify-content: center;
+  align-items: center;
+  /* position: absolute; */
+  padding: 10px 10px;
+  margin: 10px 10px;
+}
+
+.home-title {
+  display: flex;
+  text-align: center;
+  margin-bottom: 25px;
+  color: #002c63;
+}
+
+.home-text {
+  margin-bottom: 100px;
+}
+
+.rendafixa-header {
+  margin: auto 0px;
+  max-width: 100%;
+  max-height: 100px;
+  /* background-color: #002c63; */
+  color: white;
+  background-image: linear-gradient(
+    to right,
+    #002c63,
+    #00296b,
+    #002573,
+    #001f7a,
+    #0d177f
+  );
+  padding-right: 100px;
+  padding-left: 110px;
+}
+
+.rendafixa-header__title {
+  font-family: "Montserrat", sans-serif;
+}
+
+.content-container {
+  margin: 10px auto;
+}
+
+.titulo-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  gap: 20px;
+  justify-content: center;
+}
+
+.titulo-container {
+  background-color: rgb(255, 255, 255);
+  margin-bottom: 20px;
+  padding: 30px 10px;
+  border: 1px solid #002c63;
+  border-radius: 6px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 15% auto auto auto auto;
+}
+
+.titulo-nome {
+  grid-column: 1 / 4;
+  grid-row: 3;
+  margin: 5px;
+  font-weight: bold;
+}
+
+.titulo-tipo {
+  grid-column: 1 / 4;
+  grid-row: 4;
+  margin: 5px;
+  font-weight: bold;
+}
+
+.titulo-taxa {
+  background-color: white;
+  color: hsl(225, 100%, 24%);
+  padding: 2px 0px 2px 0px;
+  border: 1px solid hsl(225, 100%, 24%);
+  border-radius: 50px;
+  text-align: center;
+  grid-column: 2/4;
+  grid-row: 1;
+  align-self: flex-end;
+  margin-bottom: 10px;
+}
+
+.btnSimular {
+  background: #002c63;
+  color: white;
+  padding: 10px 20px;
+  border: 0;
+  border-radius: 20px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  grid-column: 1 / 4;
+  grid-row: 5;
+}
+
+.btnSimular:hover {
+  background: #0e3097;
+  color: white;
+}
+
+.simulacao-voltar {
+  color: #0e3097;
+  display: block;
+}
+
+.simulacao-voltar:hover {
+  padding: 0px;
+  margin: 0px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.simulacao-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 20px 20px;
+  margin: 30px 0px;
+  /* height: 80%; */
+  justify-content: center;
+  justify-items: center;
+  gap: 10px;
+}
+
+.simulacao-form-container {
+  width: 90%;
+  text-align: center;
+  padding: 30px;
+}
+
+input {
+  margin: 5px 25px;
+  display: block;
+  width: 95%;
+  text-align: start;
+  border-radius: 6px;
+  border: 1px solid #0e3097;
+  color: #0e3097;
+  font-weight: 400;
+}
+
+label {
+  margin: 0 25px;
+  display: block;
+  width: 95%;
+  text-align: start;
+  color: #0e3097;
+  font-weight: 400;
+}
+
+.form-input-container {
+  margin: 18px 0px;
+}
+
+.simulacao-titulo-nome {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  line-height: 1.2;
+  margin-top: 0;
+  color: #002c63;
+  text-align: center;
+}
+
+.simulacao-titulo-taxa {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  line-height: 1.2;
+  margin-top: 0;
+  color: #002c63;
+  text-align: center;
+}
+
+.simulacao-result-container {
+  width: 90%;
+  text-align: center;
+  padding: 30px;
+  display: grid;
+}
+
+.simulacao-result-table {
+  padding: 70px 0px;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+}
+
+.simulacao-result-attribute {
+  columns: 1;
+  text-align: start;
+  font-size: 20px;
+  align-self: center;
+  font-weight: 400;
+}
+
+.simulacao-result-value {
+  columns: 2 / 3;
+  align-self: center;
+  font-weight: 600;
+  font-size: 30px;
+  color: #00296b;
+}
+
+.liquido-value {
+  font-size: 40px;
+  color: white;
+  background-color: #00296b;
+  border-radius: 20px;
+}

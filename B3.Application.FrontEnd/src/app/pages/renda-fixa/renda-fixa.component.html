@@ -1,0 +1,36 @@
+<!-- <p>Oi {{nome}}</p>
+<button (click)="buttonTesteSubmit()">Clique Aqui</button>
+
+
+
+@if(nome == "Marcelo"){
+<p>Teste de IF</p>
+}
+
+
+@for(item of listaDeItens; track item){
+<p>{{item.id}} - {{item.nome}}</p>
+} -->
+
+<div class="container main-container rendafixa-header rendafixa-header__title">
+  <h1>Renda Fixa</h1>
+</div>
+<div class="container content-container">
+  <!-- <table>
+    <tr>
+      <td>Nome</td>
+      <td>Indexador</td>
+      <td>Rendimento</td>
+      <td></td>
+    </tr>
+    @for(tit of titulos; track tit){
+    <tr>
+      <td>{{tit.nomeTitulo}}</td>
+      <td>{{tit.indexador.descricao}}</td>
+      <td>{{tit.taxaRendimento}}</td>
+      <td><button (click)="submitSimular(tit.idTitulo)">SIMULAR</button></td>
+    </tr>
+    }
+  </table> -->
+  <app-titulos></app-titulos>
+</div>
