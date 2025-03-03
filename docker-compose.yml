@@ -11,8 +11,11 @@ services:
       - ASPNETCORE_URLS=http://0.0.0.0:8080;https://0.0.0.0:8081
       - ConnectionStrings__DefaultConnection=Server=host.docker.internal,1433;Database=TesteTecnicoB3;User Id=sa;Password=B3@testetecnico;Integrated security=False;trusted_connection=false;Persist Security Info=False;Encrypt=False;
     ports:
-      - "8080:8080"
-      - "8081:8081"
+      - "7286:80"
+      - "5175:443" 
+      # - "8080:8080"
+      # - "8081:8081"
+
 
   # b3.application.frontend:
   #   image: ${DOCKER_REGISTRY-}b3frontend
