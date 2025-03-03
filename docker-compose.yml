@@ -14,15 +14,15 @@ services:
       - "8080:8080"
       - "8081:8081"
 
-  b3.application.frontend:
-    image: ${DOCKER_REGISTRY-}b3frontend
-    build:
-      context: .
-      dockerfile: B3.Application.FrontEnd/Dockerfile
-    depends_on:
-      - b3.webapi
-    ports:
-      - "4200:80"
+  # b3.application.frontend:
+  #   image: ${DOCKER_REGISTRY-}b3frontend
+  #   build:
+  #     context: .
+  #     dockerfile: B3.Application.FrontEnd/Dockerfile
+  #   depends_on:
+  #     - b3.webapi
+  #   ports:
+  #     - "4200:80"
       
 
   b3.database:
