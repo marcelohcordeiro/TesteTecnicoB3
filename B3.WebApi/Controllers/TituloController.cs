@@ -34,23 +34,7 @@ namespace B3.Application.WebApi.Controllers
 
         }
 
-        [HttpGet("testedocker")]
-        public async Task<IActionResult> GetTitulosTesteDocker()
-        {
-            try
-            {
-                Titulo titulo = new Titulo { IdTitulo = new Guid("C2CCD2C3-2A9E-45A9-B407-3FDFE5D95FED"), NomeTitulo = "CDB Teste", IdTipoTitulo = 3, PosFixado = true, IdIndexador = 2, TaxaRendimento = 108 };
-
-                return Ok(titulo);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest("Aconteceu um erro ao tentar carregar os titulos: " + ex.Message);
-            }
-
-
-        }
-
+        
         [HttpGet("{id}")]
         public async Task<IActionResult> GetTituloById(Guid id)
         {
