@@ -117,6 +117,7 @@ Para executar o projeto faremos o mesmo em duas etapas: Back-end e Front-end.
 
 2 - Dentro do prompt de comando executar o seguinte comando:
 
+      npm install
       ng serve --open
 
 
