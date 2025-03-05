@@ -28,7 +28,7 @@ namespace B3.Application.WebApi.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest("Aconteceu um erro ao tentar carregar os titulos: " + ex.Message);
+                return BadRequest(ex.Message);
             }
 
 
@@ -46,7 +46,7 @@ namespace B3.Application.WebApi.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest("Aconteceu um erro ao tentar carregar os titulos: " + ex.Message);
+                return BadRequest(ex.Message);
             }
 
 
@@ -63,7 +63,7 @@ namespace B3.Application.WebApi.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest("Aconteceu um erro ao tentar carregar os titulos: " + ex.Message);
+                return BadRequest(ex.Message);
             }
 
 
@@ -79,7 +79,7 @@ namespace B3.Application.WebApi.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest("Aconteceu um erro ao tentar carregar os titulos: " + ex.Message);
+                return BadRequest(ex.Message);
             }
         }
     }

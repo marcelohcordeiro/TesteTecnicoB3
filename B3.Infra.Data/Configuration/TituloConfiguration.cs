@@ -18,7 +18,6 @@ namespace B3.Infra.Data.Configuration
             builder.Property(x => x.TaxaRendimento).HasColumnType("decimal(18,2)").IsRequired();
            
 
-            //builder.HasOne(x => x.Indexador).WithMany().HasForeignKey(x => x.IdIndexador);
             builder.HasKey(x => x.IdTitulo);
 
             builder.Navigation(x => x.Indexador).AutoInclude(false);
