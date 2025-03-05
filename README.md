@@ -106,14 +106,16 @@ Para executar o projeto faremos o mesmo em duas etapas: Back-end e Front-end.
 
 ### Back-end
 
-Iremos realizar o Docker Compose presente na solução
+1 - Abrir o projeto no Visual Studio.
+
+2 - Selecionar o perfil <b>docker-compose</b> e executar o projeto.
 
 
 ### Front-end
 
-Precisaremos iniciar um prompt de comando dentro da pasta do front-end: <b><i>./B3.Application.FrontEnd/</i></b>.
+1 - Precisaremos iniciar um prompt de comando dentro da pasta do front-end: <b><i>./B3.Application.FrontEnd/</i></b>.
 
-      Dentro do prompt de comando executar o seguinte comando:
+2 - Dentro do prompt de comando executar o seguinte comando:
 
       ng serve --open
 
