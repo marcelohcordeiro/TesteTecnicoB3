@@ -16,10 +16,9 @@ import { CurrencyPipe } from '@angular/common';
   imports: [RouterModule, ReactiveFormsModule, CurrencyPipe],
   providers: [TituloService],
   templateUrl: './titulos.component.html',
-  styleUrl: './titulos.component.css',
 })
 export class TitulosComponent {
-  private tituloService = inject(TituloService);
+  private readonly tituloService = inject(TituloService);
   public simulacao: boolean = false;
   public titulos!: Titulo[];
   simulacaoForm!: FormGroup;
@@ -72,7 +71,7 @@ export class TitulosComponent {
   sairSimulacao() {
     this.inverterSimulacao();
 
-    this.simulacaoForm.reset;
+    this.simulacaoForm.reset();
     this.mostrarResultadoSimulacao = false;
   }
 

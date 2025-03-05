@@ -8,10 +8,9 @@ import { TitulosComponent } from '../../components/titulos/titulos.component';
   imports: [TitulosComponent],
   providers: [TituloService],
   templateUrl: './renda-fixa.component.html',
-  styleUrl: './renda-fixa.component.css',
 })
 export class RendaFixaComponent {
-  private tituloService = inject(TituloService);
+  private readonly tituloService = inject(TituloService);
   meuBooleano = false;
   nome = 'Marcelo';
 

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { TituloService } from '../../services/titulo-service.service';
 import { RouterModule } from '@angular/router';
 @Component({
@@ -6,6 +6,5 @@ import { RouterModule } from '@angular/router';
   imports: [RouterModule],
   providers: [TituloService],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css',
 })
 export class HomeComponent {}

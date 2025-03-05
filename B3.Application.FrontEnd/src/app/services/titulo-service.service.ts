@@ -6,7 +6,7 @@ import { Simulacao } from '../types/simulacao.type';
 
 @Injectable()
 export class TituloService {
-  constructor(private httpClient: HttpClient) {}
+  constructor(private readonly httpClient: HttpClient) {}
 
   protected UrlServiceV1: string = 'https://localhost:5175/titulo/';
 
