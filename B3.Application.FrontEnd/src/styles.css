@@ -156,8 +156,17 @@
 
 .simulacao-form-container {
   width: 90%;
-  text-align: center;
+
   padding: 30px;
+}
+
+.simulacao-submit {
+  text-align: center;
+}
+
+.btn-simulacao-disabled,
+.btn-simulacao-disabled:hover {
+  background-color: gray;
 }
 
 input {
@@ -238,4 +247,17 @@ label {
   color: white;
   background-color: #00296b;
   border-radius: 20px;
+}
+
+.form-error-message {
+  text-align: left;
+  align-self: flex-start;
+  color: red;
+  font-size: 10px;
+  padding: 0px 25px;
+  margin: 0px;
+}
+
+.form-error-input {
+  border: 1px solid red;
 }

@@ -9,11 +9,11 @@ import {
   Validators,
 } from '@angular/forms';
 import { Simulacao } from '../../types/simulacao.type';
-import { CurrencyPipe } from '@angular/common';
+import { CommonModule, CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-titulos',
-  imports: [RouterModule, ReactiveFormsModule, CurrencyPipe],
+  imports: [RouterModule, ReactiveFormsModule, CurrencyPipe, CommonModule],
   providers: [TituloService],
   templateUrl: './titulos.component.html',
 })
@@ -37,7 +37,6 @@ export class TitulosComponent {
         Validators.min(1),
       ]),
       valorAporteMensal: new FormControl(null, [
-        Validators.required,
         Validators.pattern(this.numRegex),
       ]),
       quantidadeMeses: new FormControl(null, [
