@@ -26,36 +26,23 @@
             <div class="form-input-container">
               <label for="valorInicial">Valor Inicial</label>
               <span class="form-error-message" *ngIf="(simulacaoForm.controls.valorInicial.touched || simulacaoForm.controls.valorInicial.dirty) && simulacaoForm.controls.valorInicial.errors">
-                @if(simulacaoForm.controls.valorInicial.value == 0){
-                Valor Inicial deve ser maior que zero
-                }
-                @else{
-                Valor Inicial inválido
-                }
-              </span>
-              <input [ngClass]="{'form-error-input': (simulacaoForm.controls.valorInicial.touched || simulacaoForm.controls.valorInicial.dirty) && simulacaoForm.controls.valorInicial.errors}" type="text" formControlName="valorInicial" placeholder="Digite o Valor Inicial do investimento" />
+                @if(simulacaoForm.controls.valorInicial.value < 0) { Não é permitido valores negativos } @else if(simulacaoForm.controls.valorInicial.value==0) { Valor Inicial deve ser maior que zero } @else { Valor Inicial inválido } </span>
+                  <input currencyMask [(ngModel)]="simulacaoForm.controls.valorInicial.value" [options]="{align: 'left', prefix: 'R$ ', thousands: '.', decimal: ',' }" [ngClass]="{'form-error-input': (simulacaoForm.controls.valorInicial.touched || simulacaoForm.controls.valorInicial.dirty) && simulacaoForm.controls.valorInicial.errors}" type="text" formControlName="valorInicial" placeholder="Digite o Valor Inicial do investimento" />
 
             </div>
             <div class="form-input-container">
               <label for="valorAporteMensal">Aporte Mensal:</label>
               <span class="form-error-message" *ngIf="(simulacaoForm.controls.valorAporteMensal.touched || simulacaoForm.controls.valorAporteMensal.dirty) && simulacaoForm.controls.valorAporteMensal.errors">
-                Valor de Aporte Mensal inválido
-              </span>
-              <input [ngClass]="{'form-error-input': (simulacaoForm.controls.valorAporteMensal.touched || simulacaoForm.controls.valorAporteMensal.dirty) && simulacaoForm.controls.valorAporteMensal.errors}" type="text" formControlName="valorAporteMensal" placeholder="Digite o Valor de Aporte Mensal" />
+                @if(simulacaoForm.controls.valorAporteMensal.value < 0) { Não é permitido valores negativos } @else { Valor de Aporte Mensal inválido } </span>
+                  <input currencyMask [(ngModel)]="simulacaoForm.controls.valorAporteMensal.value" [options]="{align: 'left', prefix: 'R$ ', thousands: '.', decimal: ',' }" [ngClass]="{'form-error-input': (simulacaoForm.controls.valorAporteMensal.touched || simulacaoForm.controls.valorAporteMensal.dirty) && simulacaoForm.controls.valorAporteMensal.errors}" type="text" formControlName="valorAporteMensal" placeholder="Digite o Valor de Aporte Mensal" style="text-align: left" />
             </div>
 
 
             <div class="form-input-container">
               <label for="quantidadeMeses">Quantidade de Meses</label>
               <span class="form-error-message" *ngIf="(simulacaoForm.controls.quantidadeMeses.touched || simulacaoForm.controls.quantidadeMeses.dirty) && simulacaoForm.controls.quantidadeMeses.errors">
-                @if(simulacaoForm.controls.quantidadeMeses.value == 0){
-                Quantidade de meses deve ser maior que zero
-                }
-                @else{
-                Quantidade de meses inválido
-                }
-              </span>
-              <input [ngClass]="{'form-error-input': (simulacaoForm.controls.quantidadeMeses.touched || simulacaoForm.controls.quantidadeMeses.dirty) && simulacaoForm.controls.quantidadeMeses.errors}" type="text" formControlName="quantidadeMeses" placeholder="Digite a quantidade de Meses do investimento" />
+                @if(simulacaoForm.controls.quantidadeMeses.value < 0){ Não é permitido valores negativos } @else if(simulacaoForm.controls.quantidadeMeses.value % 1 !=0){ Não é permitido casas decimais para este campo } @else if(simulacaoForm.controls.quantidadeMeses.value==0){ Quantidade de meses deve ser maior que zero } @else{ Quantidade de meses inválido } </span>
+                  <input [ngClass]="{'form-error-input': (simulacaoForm.controls.quantidadeMeses.touched || simulacaoForm.controls.quantidadeMeses.dirty) && simulacaoForm.controls.quantidadeMeses.errors}" type="text" formControlName="quantidadeMeses" placeholder="Digite a quantidade de Meses do investimento" />
             </div>
             <div class="simulacao-submit">
               <button [disabled]="!simulacaoForm.valid" [ngClass]="{'btn-simulacao-disabled': !simulacaoForm.valid, 'btnSimular:hover': simulacaoForm.valid}" class="btnSimular">CALCULAR SIMULAÇÃO</button>
@@ -86,6 +73,7 @@
             </p>
             <p class="simulacao-result-value">
               {{resultadoSimulacao.valorRendimento| currency: 'BRL'}}
+
             </p>
             <p class="simulacao-result-attribute">
               Desconto(I.R.):

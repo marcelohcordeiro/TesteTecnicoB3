@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, LOCALE_ID } from '@angular/core';
 import { TituloService } from '../../services/titulo-service.service';
 import { Titulo } from '../../types/titulos.type';
 import { RouterModule } from '@angular/router';
@@ -9,12 +9,27 @@ import {
   Validators,
 } from '@angular/forms';
 import { Simulacao } from '../../types/simulacao.type';
-import { CommonModule, CurrencyPipe } from '@angular/common';
+import {
+  CommonModule,
+  CurrencyPipe,
+  registerLocaleData,
+} from '@angular/common';
+import { CurrencyMaskModule } from 'ng2-currency-mask';
+import localePt from '@angular/common/locales/pt';
+
+//REGISTRANDO A LOCALIDADE PT-BR
+registerLocaleData(localePt);
 
 @Component({
   selector: 'app-titulos',
-  imports: [RouterModule, ReactiveFormsModule, CurrencyPipe, CommonModule],
-  providers: [TituloService],
+  imports: [
+    RouterModule,
+    ReactiveFormsModule,
+    CurrencyPipe,
+    CommonModule,
+    CurrencyMaskModule,
+  ],
+  providers: [TituloService, { provide: LOCALE_ID, useValue: 'pt-BR' }],
   templateUrl: './titulos.component.html',
 })
 export class TitulosComponent {
@@ -22,10 +37,12 @@ export class TitulosComponent {
   public simulacao: boolean = false;
   public titulos!: Titulo[];
   simulacaoForm!: FormGroup;
-  numRegex = /^-?\d*[.,]?\d{0,2}$/;
+  moneyRegex = /^-?\d*[.,]?\d{0,2}$/;
+  numberRegex = /^[0-9]+(.[0-9]{0,2})?$/;
   tituloCurrent!: Titulo;
   resultadoSimulacao!: Simulacao;
   mostrarResultadoSimulacao: boolean = false;
+
   /**
    *
    */
@@ -33,15 +50,17 @@ export class TitulosComponent {
     this.simulacaoForm = new FormGroup({
       valorInicial: new FormControl(null, [
         Validators.required,
-        Validators.pattern(this.numRegex),
-        Validators.min(1),
+        Validators.pattern(this.moneyRegex),
+        Validators.min(0.01),
       ]),
       valorAporteMensal: new FormControl(null, [
-        Validators.pattern(this.numRegex),
+        Validators.pattern(this.moneyRegex),
+        Validators.min(0.0),
       ]),
       quantidadeMeses: new FormControl(null, [
         Validators.required,
         Validators.min(1),
+        Validators.pattern(this.numberRegex),
       ]),
     });
   }
@@ -91,8 +110,6 @@ export class TitulosComponent {
       .subscribe(
         (ret) => {
           this.resultadoSimulacao = ret;
-          console.log('dentro do retorno', this.resultadoSimulacao);
-          console.log('keys', Object.keys(this.resultadoSimulacao).length);
         },
         (error) => console.log(error)
       );
