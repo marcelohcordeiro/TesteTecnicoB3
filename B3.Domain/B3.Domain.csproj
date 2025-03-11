@@ -4,8 +4,11 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <SonarAnalyzerVersion>8.2.0.14119</SonarAnalyzerVersion>
   </PropertyGroup>
-  <ItemGroup>    
+  <ItemGroup>
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="$(SonarAnalyzerVersion)" />
+    <Analyzer Include="$(NuGetPackageRoot)SonarAnalyzer.CSharp/$(SonarAnalyzerVersion)/analyzers/*.dll" Visible="false" />
   </ItemGroup>
 
 </Project>

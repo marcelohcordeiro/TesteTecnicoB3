@@ -7,6 +7,7 @@
     <UserSecretsId>c87ec75e-0f1e-48ee-960c-e8d62f935cd4</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
+    <SonarAnalyzerVersion>8.2.0.14119</SonarAnalyzerVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -32,5 +33,8 @@
   <ItemGroup>
     <None Remove="..\.dockerignore" />
   </ItemGroup>
-
+  <ItemGroup>
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="$(SonarAnalyzerVersion)" />
+    <Analyzer Include="$(NuGetPackageRoot)SonarAnalyzer.CSharp/$(SonarAnalyzerVersion)/analyzers/*.dll" Visible="false" />
+  </ItemGroup>
 </Project>
