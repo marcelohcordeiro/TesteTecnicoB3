@@ -32,6 +32,7 @@ namespace B3.Application.Services
             if(valorInicial <= 0)
             {
                 throw new Exception("Valor Inicial deve ser maior que zero.");
+                
             }
 
             if(qtdeMesesInvestimento <= 0)

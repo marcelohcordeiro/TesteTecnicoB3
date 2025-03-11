@@ -16,6 +16,7 @@ import {
 } from '@angular/common';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 import localePt from '@angular/common/locales/pt';
+import { SimulacaoInput } from '../../types/simulacao-input.type';
 
 //REGISTRANDO A LOCALIDADE PT-BR
 registerLocaleData(localePt);
@@ -42,6 +43,11 @@ export class TitulosComponent {
   tituloCurrent!: Titulo;
   resultadoSimulacao!: Simulacao;
   mostrarResultadoSimulacao: boolean = false;
+  simulacaoInput: SimulacaoInput = {
+    idTitulo: '',
+    valorInicial: '1',
+    quantidadeMesesInvestimento: 1,
+  };
 
   /**
    *
@@ -100,18 +106,17 @@ export class TitulosComponent {
   simularInvestimento() {
     this.mostrarResultadoSimulacao = true;
 
-    this.tituloService
-      .simularTitulo(
-        this.tituloCurrent.idTitulo,
-        this.simulacaoForm.value.valorInicial,
-        this.simulacaoForm.value.valorAporteMensal,
-        this.simulacaoForm.value.quantidadeMeses
-      )
-      .subscribe(
-        (ret) => {
-          this.resultadoSimulacao = ret;
-        },
-        (error) => console.log(error)
-      );
+    //mapping
+    this.simulacaoInput.idTitulo = this.tituloCurrent.idTitulo;
+    this.simulacaoInput.valorInicial = this.simulacaoForm.value.valorInicial;
+    this.simulacaoInput.quantidadeMesesInvestimento =
+      this.simulacaoForm.value.quantidadeMeses;
+
+    this.tituloService.simularTituloN(this.simulacaoInput).subscribe(
+      (ret) => {
+        this.resultadoSimulacao = ret;
+      },
+      (error) => console.log(error)
+    );
   }
 }

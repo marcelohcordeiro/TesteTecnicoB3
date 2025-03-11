@@ -1,4 +1,5 @@
-﻿using B3.Domain.Interfaces;
+﻿using B3.Application.Inputs;
+using B3.Domain.Interfaces;
 using B3.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -68,13 +69,14 @@ namespace B3.Application.WebApi.Controllers
 
 
         }
+        
 
-        [HttpGet("simulacao/{id}/{valorInicial}/{qtdeMesesInvestimento}")]
-        public async Task<IActionResult> GetSimulacaoTitulo(Guid id, decimal valorInicial, int qtdeMesesInvestimento)
+        [HttpPost("simulacao")]
+        public async Task<IActionResult> GetSimulacaoTitulo([FromBody] SimulacaoTituloInputModel input)
         {
             try
             {
-                var titulo =  await _tituloService.GetSimularTitulo(id, valorInicial, qtdeMesesInvestimento);
+                var titulo = await _tituloService.GetSimularTitulo(input.IdTitulo, input.ValorInicial, input.QuantidadeMesesInvestimento);
                 return Ok(titulo);
             }
             catch (Exception ex)

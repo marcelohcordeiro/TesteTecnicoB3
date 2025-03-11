@@ -20,6 +20,8 @@ namespace B3.Application.WebApi
 
             builder.Services.ConfigurePersistenceApp(builder.Configuration);
             builder.Services.ConfigureInjectionDependencyApp();
+            builder.Services.ConfigureValidationDependencies();
+            
 
             builder.Services.AddCors(option =>
             {
@@ -38,7 +40,7 @@ namespace B3.Application.WebApi
                 {
                     c.SwaggerDoc("v1", new OpenApiInfo { Title = "B3.API", Version = "v1" });
                 });
-
+            
 
 
 
