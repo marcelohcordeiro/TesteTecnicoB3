@@ -17,9 +17,9 @@ namespace B3.Domain.Models
         public string? Descricao { get; set; }
 
         [Required]
-        public float TaxaAtual {get;set;}
+        public decimal TaxaAtual {get;set;}
         public DateTime DataUltimaAtualizacao { get; set; }
         
-        public ICollection<Titulo> Titulos { get; set; }
+        public ICollection<Titulo>? Titulos { get; set; }
     }
 }

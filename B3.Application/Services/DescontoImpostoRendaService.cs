@@ -17,7 +17,7 @@ namespace B3.Application.Services
             return x;
         }
 
-        public async Task<float> CalcularDescontoIR(float valorRendimento, int qtdeMesesInvestimento)
+        public async Task<decimal> CalcularDescontoIR(decimal valorRendimento, int qtdeMesesInvestimento)
         {
             var descontoImpostoRenda = await _impostoRepository.GetDescontoImpostoRendaByMonths(qtdeMesesInvestimento);
 

@@ -69,12 +69,12 @@ namespace B3.Application.WebApi.Controllers
 
         }
 
-        [HttpGet("simulacao/{id}/{valorInicial}/{valorAporteMensal}/{qtdeMesesInvestimento}")]
-        public async Task<IActionResult> GetSimulacaoTitulo(Guid id, float valorInicial, float valorAporteMensal, int qtdeMesesInvestimento)
+        [HttpGet("simulacao/{id}/{valorInicial}/{qtdeMesesInvestimento}")]
+        public async Task<IActionResult> GetSimulacaoTitulo(Guid id, decimal valorInicial, int qtdeMesesInvestimento)
         {
             try
             {
-                var titulo =  await _tituloService.GetSimularTitulo(id, valorInicial, valorAporteMensal, qtdeMesesInvestimento);
+                var titulo =  await _tituloService.GetSimularTitulo(id, valorInicial, qtdeMesesInvestimento);
                 return Ok(titulo);
             }
             catch (Exception ex)

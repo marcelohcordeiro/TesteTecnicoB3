@@ -7,8 +7,8 @@ namespace B3.Domain.Interfaces
     {
         Task<List<Titulo>> GetTitulos();
         Task<Titulo> GetTituloById(Guid id);
-        Task<SimulacaoTituloViewModel> GetSimularTitulo(Guid idTitulo, float valorInicial, float valorAporteMensal, int qtdeMesesInvestimento);
-        Task<SimulacaoTituloViewModel> CalcularSimulacaoTitulo(Guid idTitulo, float valorInicial, float valorAporteMensal, int qtdeMesesInvestimento);
+        Task<SimulacaoTituloViewModel> GetSimularTitulo(Guid idTitulo, decimal valorInicial, int qtdeMesesInvestimento);
+        Task<SimulacaoTituloViewModel> CalcularSimulacaoTitulo(Guid idTitulo, decimal valorInicial, int qtdeMesesInvestimento);
         Task<List<Titulo>> GetTitulosRendaFixa();
     }
 }

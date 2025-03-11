@@ -15,6 +15,6 @@ namespace B3.Domain.Models
         
         public int? QtdeMesesFim { get; set; }
         [Required]
-        public float PercentualDesconto { get; set; }
+        public decimal PercentualDesconto { get; set; }
     }
 }

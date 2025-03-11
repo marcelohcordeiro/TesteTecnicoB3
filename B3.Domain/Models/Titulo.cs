@@ -26,7 +26,7 @@ namespace B3.Domain.Models
         
         public Indexador? Indexador { get; set; }
       
-        public float TaxaRendimento { get; set; }
+        public decimal TaxaRendimento { get; set; }
         
         
     }

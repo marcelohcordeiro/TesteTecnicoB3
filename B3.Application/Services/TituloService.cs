@@ -27,7 +27,7 @@ namespace B3.Application.Services
             return await _tituloRepository.GetTitulos();
         }
 
-        public async Task<SimulacaoTituloViewModel> GetSimularTitulo(Guid idTitulo, float valorInicial, float valorAporteMensal, int qtdeMesesInvestimento)
+        public async Task<SimulacaoTituloViewModel> GetSimularTitulo(Guid idTitulo, decimal valorInicial, int qtdeMesesInvestimento)
         {
             if(valorInicial <= 0)
             {
@@ -39,7 +39,7 @@ namespace B3.Application.Services
                 throw new Exception("Quantidade de meses investidos deve ser maior que zero.");
             }
 
-            var simulacao = await CalcularSimulacaoTitulo(idTitulo, valorInicial, valorAporteMensal, qtdeMesesInvestimento);
+            var simulacao = await CalcularSimulacaoTitulo(idTitulo, valorInicial, qtdeMesesInvestimento);
 
             simulacao.ValorDescontoImpostoRenda = await _impostoService.CalcularDescontoIR(simulacao.ValorRendimento, qtdeMesesInvestimento);
 
@@ -50,29 +50,31 @@ namespace B3.Application.Services
             return simulacao;
         }
 
-        public async Task<SimulacaoTituloViewModel> CalcularSimulacaoTitulo(Guid id, float valorInicial, float valorAporteMensal, int qtdeMesesInvestimento)
+        public async Task<SimulacaoTituloViewModel> CalcularSimulacaoTitulo(Guid id, decimal valorInicial, int qtdeMesesInvestimento)
         {
-            
-            float valorTaxaCalculada;
-            float valorTotal = valorInicial;
+
+            decimal valorTaxaCalculada;
+            decimal valorTotal = valorInicial;
 
             SimulacaoTituloViewModel simulacao = new SimulacaoTituloViewModel();    
 
             //Pegar Taxas do Titulo
             var titulo = await _tituloRepository.GetTituloById(id);
 
-            valorTaxaCalculada =  (titulo.PosFixado ? titulo.Indexador.TaxaAtual/100 * titulo.TaxaRendimento/100: titulo.TaxaRendimento/100);
-            valorTaxaCalculada = (float)Math.Round(valorTaxaCalculada, 4);
+            valorTaxaCalculada =  (titulo.PosFixado ? titulo.Indexador.TaxaAtual/100 * titulo.TaxaRendimento/100: titulo.TaxaRendimento/100);          
+
+
+             valorTaxaCalculada = valorTaxaCalculada;
             
 
             //Calculando o juro composto mes a mes
             for (int mes = 1; mes <= qtdeMesesInvestimento; mes++)
             {
-               valorTotal = (valorTotal + valorAporteMensal) * (1 + valorTaxaCalculada);                
+               valorTotal = valorTotal  * (1 + valorTaxaCalculada);                
             }
 
             simulacao.ValorTotalBruto = valorTotal;
-            simulacao.ValorTotalInvestido = valorInicial + (valorAporteMensal * qtdeMesesInvestimento);
+            simulacao.ValorTotalInvestido = valorInicial;
             simulacao.ValorRendimento = simulacao.ValorTotalBruto - simulacao.ValorTotalInvestido;
 
             return simulacao;

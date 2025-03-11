@@ -31,11 +31,7 @@ export class TituloService {
         '/' +
         valorInicial +
         '/' +
-        valorAporteMensal +
-        '/' +
         qtdeMeses
     );
   }
 }
-
-//57:08 - fernanda kipper projeto fullstack

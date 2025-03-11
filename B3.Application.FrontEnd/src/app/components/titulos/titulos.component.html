@@ -30,12 +30,7 @@
                   <input currencyMask [(ngModel)]="simulacaoForm.controls.valorInicial.value" [options]="{align: 'left', prefix: 'R$ ', thousands: '.', decimal: ',' }" [ngClass]="{'form-error-input': (simulacaoForm.controls.valorInicial.touched || simulacaoForm.controls.valorInicial.dirty) && simulacaoForm.controls.valorInicial.errors}" type="text" formControlName="valorInicial" placeholder="Digite o Valor Inicial do investimento" />
 
             </div>
-            <div class="form-input-container">
-              <label for="valorAporteMensal">Aporte Mensal:</label>
-              <span class="form-error-message" *ngIf="(simulacaoForm.controls.valorAporteMensal.touched || simulacaoForm.controls.valorAporteMensal.dirty) && simulacaoForm.controls.valorAporteMensal.errors">
-                @if(simulacaoForm.controls.valorAporteMensal.value < 0) { Não é permitido valores negativos } @else { Valor de Aporte Mensal inválido } </span>
-                  <input currencyMask [(ngModel)]="simulacaoForm.controls.valorAporteMensal.value" [options]="{align: 'left', prefix: 'R$ ', thousands: '.', decimal: ',' }" [ngClass]="{'form-error-input': (simulacaoForm.controls.valorAporteMensal.touched || simulacaoForm.controls.valorAporteMensal.dirty) && simulacaoForm.controls.valorAporteMensal.errors}" type="text" formControlName="valorAporteMensal" placeholder="Digite o Valor de Aporte Mensal" style="text-align: left" />
-            </div>
+
 
 
             <div class="form-input-container">
@@ -85,7 +80,7 @@
               Valor Líquido:
             </p>
             <p class="simulacao-result-value liquido-value">
-              {{resultadoSimulacao.valorTotalLiquido | currency: 'BRL'}}
+              {{resultadoSimulacao.valorTotalLiquido | currency: 'BRL' : 'symbol-narrow' : '4.2-2'}}
             </p>
           </div>
 
