@@ -39,7 +39,7 @@ export class TitulosComponent {
   public titulos!: Titulo[];
   simulacaoForm!: FormGroup;
   moneyRegex = /^-?\d*[.,]?\d{0,2}$/;
-  numberRegex = /^[0-9]+(.[0-9]{0,2})?$/;
+  numberRegex = /^\d+(.\d{0,2})?$/;
   tituloCurrent!: Titulo;
   resultadoSimulacao!: Simulacao;
   mostrarResultadoSimulacao: boolean = false;
@@ -77,12 +77,15 @@ export class TitulosComponent {
   }
 
   getTitulos() {
-    this.tituloService.getTitulos().subscribe(
-      (ret) => {
+    this.tituloService.getTitulos().subscribe({
+      next: (ret: any) => {
         this.titulos = ret;
       },
-      (error) => console.log(error)
-    );
+      error: (error: any) => {
+        console.log(error);
+      },
+      complete: () => {},
+    });
   }
 
   ativarSimulacao(tituloSelecionado: Titulo) {
@@ -112,11 +115,14 @@ export class TitulosComponent {
     this.simulacaoInput.quantidadeMesesInvestimento =
       this.simulacaoForm.value.quantidadeMeses;
 
-    this.tituloService.simularTituloN(this.simulacaoInput).subscribe(
-      (ret) => {
+    this.tituloService.simularTitulo(this.simulacaoInput).subscribe({
+      next: (ret: any) => {
         this.resultadoSimulacao = ret;
       },
-      (error) => console.log(error)
-    );
+      error: (error: any) => {
+        console.log(error);
+      },
+      complete: () => {},
+    });
   }
 }

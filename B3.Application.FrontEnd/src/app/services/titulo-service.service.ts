@@ -19,7 +19,7 @@ export class TituloService {
     return this.httpClient.get<Titulo[]>(this.UrlServiceV1 + idTitulo);
   }
 
-  simularTituloN(simulacaoInput: SimulacaoInput): Observable<Simulacao> {
+  simularTitulo(simulacaoInput: SimulacaoInput): Observable<Simulacao> {
     return this.httpClient.post<Simulacao>(
       this.UrlServiceV1 + 'simulacao',
       simulacaoInput

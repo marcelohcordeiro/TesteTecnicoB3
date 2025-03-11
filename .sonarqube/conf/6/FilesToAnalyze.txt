@@ -1,0 +1,12 @@
+﻿E:\TesteTecnico\TesteTecnicoB3\B3.WebApi\Controllers\TituloController.cs
+E:\TesteTecnico\TesteTecnicoB3\B3.WebApi\Program.cs
+E:\TesteTecnico\TesteTecnicoB3\B3.WebApi\obj\Debug\net6.0\B3.WebApi.GlobalUsings.g.cs
+E:\TesteTecnico\TesteTecnicoB3\B3.WebApi\obj\Debug\net6.0\.NETCoreApp,Version=v6.0.AssemblyAttributes.cs
+E:\TesteTecnico\TesteTecnicoB3\B3.WebApi\obj\Debug\net6.0\B3.WebApi.AssemblyInfo.cs
+E:\TesteTecnico\TesteTecnicoB3\B3.WebApi\obj\Debug\net6.0\B3.WebApi.MvcApplicationPartsAssemblyInfo.cs
+E:\TesteTecnico\TesteTecnicoB3\B3.WebApi\appsettings.Development.json
+E:\TesteTecnico\TesteTecnicoB3\B3.WebApi\appsettings.json
+E:\TesteTecnico\TesteTecnicoB3\B3.WebApi\Dockerfile
+E:\TesteTecnico\TesteTecnicoB3\B3.WebApi\Dockerfile.original
+E:\TesteTecnico\TesteTecnicoB3\B3.WebApi\Properties\launchSettings.json
+E:\TesteTecnico\TesteTecnicoB3\.dockerignore

@@ -1,0 +1,3 @@
+﻿E:\TesteTecnico\TesteTecnicoB3\docker-compose.override.yml
+E:\TesteTecnico\TesteTecnicoB3\docker-compose.yml
+E:\TesteTecnico\TesteTecnicoB3\.dockerignore

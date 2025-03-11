@@ -25,12 +25,15 @@ export class RendaFixaComponent {
   }
 
   ngOnInit() {
-    this.tituloService.getTitulos().subscribe(
-      (ret) => {
+    this.tituloService.getTitulos().subscribe({
+      next: (ret: any) => {
         this.titulos = ret;
         console.log(ret);
       },
-      (error) => console.log(error)
-    );
+      error: (error: any) => {
+        console.log(error);
+      },
+      complete: () => {},
+    });
   }
 }
