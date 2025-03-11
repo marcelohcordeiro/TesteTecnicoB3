@@ -29,16 +29,9 @@ namespace B3.Application.Services
 
         public async Task<SimulacaoTituloViewModel> GetSimularTitulo(Guid idTitulo, decimal valorInicial, int qtdeMesesInvestimento)
         {
-            if(valorInicial <= 0)
-            {
-                throw new Exception("Valor Inicial deve ser maior que zero.");
-                
-            }
+            
 
-            if(qtdeMesesInvestimento <= 0)
-            {
-                throw new Exception("Quantidade de meses investidos deve ser maior que zero.");
-            }
+           
 
             var simulacao = await CalcularSimulacaoTitulo(idTitulo, valorInicial, qtdeMesesInvestimento);
 
@@ -51,7 +44,7 @@ namespace B3.Application.Services
             return simulacao;
         }
 
-        public async Task<SimulacaoTituloViewModel> CalcularSimulacaoTitulo(Guid id, decimal valorInicial, int qtdeMesesInvestimento)
+        public async Task<SimulacaoTituloViewModel> CalcularSimulacaoTitulo(Guid idTitulo, decimal valorInicial, int qtdeMesesInvestimento)
         {
 
             decimal valorTaxaCalculada;
@@ -60,13 +53,10 @@ namespace B3.Application.Services
             SimulacaoTituloViewModel simulacao = new SimulacaoTituloViewModel();    
 
             //Pegar Taxas do Titulo
-            var titulo = await _tituloRepository.GetTituloById(id);
+            var titulo = await _tituloRepository.GetTituloById(idTitulo);
 
-            valorTaxaCalculada =  (titulo.PosFixado ? titulo.Indexador.TaxaAtual/100 * titulo.TaxaRendimento/100: titulo.TaxaRendimento/100);          
-
-
-             valorTaxaCalculada = valorTaxaCalculada;
-            
+            valorTaxaCalculada =  (titulo.PosFixado ? titulo.Indexador!.TaxaAtual/100 * titulo.TaxaRendimento/100: titulo.TaxaRendimento/100);       
+                        
 
             //Calculando o juro composto mes a mes
             for (int mes = 1; mes <= qtdeMesesInvestimento; mes++)

@@ -9,7 +9,7 @@ namespace B3.Application.WebApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class TituloController : Controller
+    public class TituloController : ControllerBase
     {
         private readonly ITituloService _tituloService;
 
