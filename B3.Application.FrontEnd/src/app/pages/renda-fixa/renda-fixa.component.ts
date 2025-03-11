@@ -11,18 +11,9 @@ import { TitulosComponent } from '../../components/titulos/titulos.component';
 })
 export class RendaFixaComponent {
   private readonly tituloService = inject(TituloService);
-  meuBooleano = false;
-  nome = 'Marcelo';
-
   public titulos!: Titulo[];
 
-  atualizaBooleano(valor: boolean) {
-    this.meuBooleano = valor;
-  }
-
-  buttonTesteSubmit() {
-    console.log('teste do tchellinho');
-  }
+  
 
   ngOnInit() {
     this.tituloService.getTitulos().subscribe({
