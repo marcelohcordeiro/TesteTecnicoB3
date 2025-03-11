@@ -135,6 +135,10 @@
 .simulacao-voltar {
   color: #0e3097;
   display: block;
+  padding: 0px;
+  margin: 0px;
+  background-color: transparent;
+  border: 0;
 }
 
 .simulacao-voltar:hover {
