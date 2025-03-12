@@ -10,8 +10,8 @@ namespace B3.Application.Services
     {
         private readonly ITituloRepository _tituloRepository;
         private readonly IDescontoImpostoRendaService _impostoService;
-        public static int MaximoQtdeMeses = 1200;
-        public static int MinimoQtdeMeses = 1;
+        private readonly int MaximoQtdeMeses = 1200;
+        public readonly int MinimoQtdeMeses = 1;
         public TituloService(ITituloRepository tituloRepository, IDescontoImpostoRendaService impostoService)
         {
 
