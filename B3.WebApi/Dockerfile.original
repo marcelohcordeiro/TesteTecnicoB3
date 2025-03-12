@@ -53,12 +53,12 @@ COPY ["B3.Infra.Data/B3.Infra.Data.csproj", "B3.Infra.Data/"]
 RUN dotnet restore "./B3.WebApi/B3.WebApi.csproj"
 COPY . .
 WORKDIR "/src/B3.WebApi"
-RUN dotnet build "./B3.WebApi.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "./B3.WebApi.csproj" -c "$BUILD_CONFIGURATION" -o /app/build
 
 # This stage is used to publish the service project to be copied to the final stage
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./B3.WebApi.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./B3.WebApi.csproj" -c "$BUILD_CONFIGURATION" -o /app/publish /p:UseAppHost=false
 
 # This stage is used in production or when running from VS in regular mode (Default when not using the Debug configuration)
 FROM base AS final
