@@ -6,6 +6,11 @@ namespace B3.Domain.Models
 {
     public class TipoTitulo
     {
+        public TipoTitulo()
+        {
+            Descricao = "";
+        }
+
         [Required]
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -19,7 +24,7 @@ namespace B3.Domain.Models
         public bool RendaFixa { get; set; }
 
 
-        public ICollection<Titulo> Titulos { get; set; }
+        public ICollection<Titulo>? Titulos { get; set; }
 
     }
 }
