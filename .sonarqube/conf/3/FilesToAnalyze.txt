@@ -1,4 +1,5 @@
-﻿E:\TesteTecnicoB3\B3.Application\Inputs\SimulacaoTituloInputModel.cs
+﻿E:\TesteTecnicoB3\B3.Application\Exceptions\MinimumValueException.cs
+E:\TesteTecnicoB3\B3.Application\Inputs\SimulacaoTituloInputModel.cs
 E:\TesteTecnicoB3\B3.Application\Services\DescontoImpostoRendaService.cs
 E:\TesteTecnicoB3\B3.Application\Services\TituloService.cs
 E:\TesteTecnicoB3\B3.Application\ValidationExtensions.cs

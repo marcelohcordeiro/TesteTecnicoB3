@@ -25,7 +25,6 @@ namespace B3.Application.Exceptions
             
         }
 
-        [Obsolete("", DiagnosticId = "SYSLIB0051")]
         protected MinimumValueException(SerializationInfo info, StreamingContext context) : base(info, context) { }
        
     }
