@@ -1,9 +1,6 @@
-﻿E:\TesteTecnico\TesteTecnicoB3\B3.Domain\Interfaces\IDescontoImpostoRendaRepository.cs
-E:\TesteTecnico\TesteTecnicoB3\B3.Domain\Interfaces\IDescontoImpostoRendaService.cs
-E:\TesteTecnico\TesteTecnicoB3\B3.Domain\Interfaces\ITituloRepository.cs
-E:\TesteTecnico\TesteTecnicoB3\B3.Domain\Interfaces\ITituloService.cs
-E:\TesteTecnico\TesteTecnicoB3\B3.Domain\Models\DescontoImpostoRenda.cs
-E:\TesteTecnico\TesteTecnicoB3\B3.Domain\Models\Indexador.cs
-E:\TesteTecnico\TesteTecnicoB3\B3.Domain\Models\TipoTitulo.cs
-E:\TesteTecnico\TesteTecnicoB3\B3.Domain\Models\Titulo.cs
-E:\TesteTecnico\TesteTecnicoB3\B3.Domain\ViewModels\SimulacaoTituloViewModel.cs
+﻿C:\Users\m.cordeiro\Documents\TesteTecnicoB3\B3.Application\Inputs\SimulacaoTituloInputModel.cs
+C:\Users\m.cordeiro\Documents\TesteTecnicoB3\B3.Application\Services\DescontoImpostoRendaService.cs
+C:\Users\m.cordeiro\Documents\TesteTecnicoB3\B3.Application\Services\TituloService.cs
+C:\Users\m.cordeiro\Documents\TesteTecnicoB3\B3.Application\ValidationExtensions.cs
+C:\Users\m.cordeiro\Documents\TesteTecnicoB3\B3.Application\Validators\SimulacaoTituloValidator.cs
+C:\Users\m.cordeiro\Documents\TesteTecnicoB3\B3.Application\Validators\TituloValidator.cs

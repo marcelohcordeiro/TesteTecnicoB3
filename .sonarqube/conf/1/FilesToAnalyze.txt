@@ -1,3 +1,9 @@
-﻿E:\TesteTecnico\TesteTecnicoB3\docker-compose.override.yml
-E:\TesteTecnico\TesteTecnicoB3\docker-compose.yml
-E:\TesteTecnico\TesteTecnicoB3\.dockerignore
+﻿C:\Users\m.cordeiro\Documents\TesteTecnicoB3\B3.Domain\Interfaces\IDescontoImpostoRendaRepository.cs
+C:\Users\m.cordeiro\Documents\TesteTecnicoB3\B3.Domain\Interfaces\IDescontoImpostoRendaService.cs
+C:\Users\m.cordeiro\Documents\TesteTecnicoB3\B3.Domain\Interfaces\ITituloRepository.cs
+C:\Users\m.cordeiro\Documents\TesteTecnicoB3\B3.Domain\Interfaces\ITituloService.cs
+C:\Users\m.cordeiro\Documents\TesteTecnicoB3\B3.Domain\Models\DescontoImpostoRenda.cs
+C:\Users\m.cordeiro\Documents\TesteTecnicoB3\B3.Domain\Models\Indexador.cs
+C:\Users\m.cordeiro\Documents\TesteTecnicoB3\B3.Domain\Models\TipoTitulo.cs
+C:\Users\m.cordeiro\Documents\TesteTecnicoB3\B3.Domain\Models\Titulo.cs
+C:\Users\m.cordeiro\Documents\TesteTecnicoB3\B3.Domain\ViewModels\SimulacaoTituloViewModel.cs
