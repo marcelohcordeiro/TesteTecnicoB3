@@ -1,4 +1,5 @@
 ﻿E:\TesteTecnicoB3\B3.Tests\CalculoSimulacaoTituloTests.cs
+E:\TesteTecnicoB3\B3.Tests\ConfigureTestDbContext.cs
 E:\TesteTecnicoB3\B3.Tests\ConsultaTituloTests.cs
 E:\TesteTecnicoB3\B3.Tests\Usings.cs
 C:\Users\VS\.nuget\packages\microsoft.net.test.sdk\17.1.0\build\netcoreapp2.1\Microsoft.NET.Test.Sdk.Program.cs
@@ -9,6 +10,7 @@ C:\Users\VS\.nuget\packages\xunit.runner.visualstudio\2.4.3\build\netcoreapp2.1\
 C:\Users\VS\.nuget\packages\xunit.runner.visualstudio\2.4.3\build\netcoreapp2.1\xunit.runner.reporters.netcoreapp10.dll
 C:\Users\VS\.nuget\packages\xunit.runner.visualstudio\2.4.3\build\netcoreapp2.1\xunit.runner.utility.netcoreapp10.dll
 E:\TesteTecnicoB3\B3.Tests\TestResults\1eb7ab4e-a888-43d2-afcf-4b636e8b9b0f\VS_DESKTOP-55OC56N_2025-03-12.12_20_00.coverage
+E:\TesteTecnicoB3\B3.Tests\TestResults\217e23e3-2a51-4031-b7a9-418088baa0fb\VS_DESKTOP-55OC56N_2025-03-12.12_28_27.coverage
 E:\TesteTecnicoB3\B3.Tests\TestResults\35f17d8c-4ea9-4c81-a970-72a6dcd876e7\VS_DESKTOP-55OC56N_2025-03-12.09_40_33.coverage
 E:\TesteTecnicoB3\B3.Tests\TestResults\51b24e15-da83-46db-8d32-f5d5b9e24627\VS_DESKTOP-55OC56N_2025-03-12.10_19_10.coverage
 E:\TesteTecnicoB3\B3.Tests\TestResults\8109923c-e341-4917-89a8-097555acc5b6\VS_DESKTOP-55OC56N_2025-03-12.12_25_07.coverage
