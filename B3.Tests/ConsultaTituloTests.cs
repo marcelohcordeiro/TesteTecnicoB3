@@ -164,8 +164,8 @@ namespace B3.Tests
 
             //Assert
             Assert.Equal(3, titulos.Count);
-            Assert.Equal(new Guid("4baa7a4a-6ec3-4e52-b011-a82824830686"), titulos[0].IdTitulo);
-            Assert.Equal(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), titulos[1].IdTitulo);            
+            Assert.Equal(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), titulos[0].IdTitulo);
+            Assert.Equal(new Guid("4baa7a4a-6ec3-4e52-b011-a82824830686"), titulos[1].IdTitulo);                        
             Assert.Equal(new Guid("C2CCD2C3-2A9E-45A9-B407-3FDFE5D95FED"), titulos[2].IdTitulo);
 
 
