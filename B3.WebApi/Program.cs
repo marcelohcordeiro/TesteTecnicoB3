@@ -6,9 +6,10 @@ using Newtonsoft;
 using Microsoft.Extensions.DependencyInjection;
 using B3.Infra.Data;
 using B3.Infra.Data.Context;
+using B3.Application;
 
 
-namespace B3.Application.WebApi
+namespace B3.WebApi
 {
     public static class Program
     {

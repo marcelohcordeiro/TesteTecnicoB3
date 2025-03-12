@@ -15,12 +15,12 @@ namespace B3.Infra.Data.Repositories
 
         public async Task<DescontoImpostoRenda> GetDescontoImpostoRendaByMonths(int qtdeMesesInvestimento)
         {
-            return await _context.descontoImpostoRendas.Where(x => x.QtdeMesesInicio <= qtdeMesesInvestimento && (x.QtdeMesesFim == null ? qtdeMesesInvestimento : x.QtdeMesesFim) >= qtdeMesesInvestimento).FirstAsync();
+            return await _context.descontoImpostoRendas!.Where(x => x.QtdeMesesInicio <= qtdeMesesInvestimento && (x.QtdeMesesFim == null ? qtdeMesesInvestimento : x.QtdeMesesFim) >= qtdeMesesInvestimento).FirstAsync();
         }
 
         public async Task<List<DescontoImpostoRenda>> GetDescontoImpostoRendas()
         {
-            var x = await _context.descontoImpostoRendas.ToListAsync();
+            var x = await _context.descontoImpostoRendas!.ToListAsync();
             return x;
         }
     }
