@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>E:\TesteTecnicoB3\B3.Infra.Data\Context\AppDbContext.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using B3.Infra.Data.Configuration;
+using B3.Domain.Models;
+using Microsoft.EntityFrameworkCore;
+
+namespace B3.Infra.Data.Context
+{
+    public class AppDbContext : DbContext
+    {
+
+        public AppDbContext(DbContextOptions&lt;AppDbContext&gt; options) : base(options)
+        {
+           
+        }
+
+        public DbSet&lt;Titulo&gt;? Titulos { get; set; }
+        public DbSet&lt;TipoTitulo&gt;? TipoTitulos { get; set; }
+        public DbSet&lt;Indexador&gt;? Indexadores { get; set; }
+        public DbSet&lt;DescontoImpostoRenda&gt;? descontoImpostoRendas { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            new TituloConfiguration().Configure(modelBuilder.Entity&lt;Titulo&gt;());
+            new IndexadorConfiguration().Configure(modelBuilder.Entity&lt;Indexador&gt;());
+            new TipoTituloConfiguration().Configure(modelBuilder.Entity&lt;TipoTitulo&gt;());
+            new DescontoImpostoRendaConfiguration().Configure(modelBuilder.Entity&lt;DescontoImpostoRenda&gt;());
+        }
+
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[10,71,10,84,1],[11,9,11,10,1],[13,9,13,10,1],[15,41,15,45,1],[15,46,15,50,1],[16,49,16,53,1],[16,54,16,58,1],[17,48,17,52,1],[17,53,17,57,1],[18,69,18,73,1],[18,74,18,78,1],[21,9,21,10,1],[22,13,22,80,1],[23,13,23,86,1],[24,13,24,88,1],[25,13,25,108,1],[26,9,26,10,1]]);
+    </script>
+  </body>
+</html>

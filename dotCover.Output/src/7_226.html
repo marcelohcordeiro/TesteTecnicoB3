@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>E:\TesteTecnicoB3\B3.Infra.Data\Migrations\AppDbContextModelSnapshot.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+// &lt;auto-generated /&gt;
+using System;
+using B3.Infra.Data.Context;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+
+#nullable disable
+
+namespace B3.Infra.Data.Migrations
+{
+    [DbContext(typeof(AppDbContext))]
+    partial class AppDbContextModelSnapshot : ModelSnapshot
+    {
+        protected override void BuildModel(ModelBuilder modelBuilder)
+        {
+#pragma warning disable 612, 618
+            modelBuilder
+                .HasAnnotation(&quot;ProductVersion&quot;, &quot;6.0.36&quot;)
+                .HasAnnotation(&quot;Relational:MaxIdentifierLength&quot;, 128);
+
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity(&quot;B3.Domain.Models.DescontoImpostoRenda&quot;, b =&gt;
+                {
+                    b.Property&lt;Guid&gt;(&quot;IdDescontoImpostoRenda&quot;)
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType(&quot;uniqueidentifier&quot;);
+
+                    b.Property&lt;string&gt;(&quot;Descricao&quot;)
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType(&quot;nvarchar(100)&quot;);
+
+                    b.Property&lt;decimal&gt;(&quot;PercentualDesconto&quot;)
+                        .HasColumnType(&quot;decimal(18,2)&quot;);
+
+                    b.Property&lt;int?&gt;(&quot;QtdeMesesFim&quot;)
+                        .HasColumnType(&quot;int&quot;);
+
+                    b.Property&lt;int&gt;(&quot;QtdeMesesInicio&quot;)
+                        .HasColumnType(&quot;int&quot;);
+
+                    b.HasKey(&quot;IdDescontoImpostoRenda&quot;);
+
+                    b.ToTable(&quot;DescontoImpostoRenda&quot;, (string)null);
+                });
+
+            modelBuilder.Entity(&quot;B3.Domain.Models.Indexador&quot;, b =&gt;
+                {
+                    b.Property&lt;int&gt;(&quot;IdIndexador&quot;)
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType(&quot;int&quot;)
+                        .HasColumnName(&quot;IdIndiceTipo&quot;);
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property&lt;int&gt;(&quot;IdIndexador&quot;), 1L, 1);
+
+                    b.Property&lt;DateTime&gt;(&quot;DataUltimaAtualizacao&quot;)
+                        .HasColumnType(&quot;datetime2&quot;);
+
+                    b.Property&lt;string&gt;(&quot;Descricao&quot;)
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType(&quot;nvarchar(100)&quot;);
+
+                    b.Property&lt;decimal&gt;(&quot;TaxaAtual&quot;)
+                        .HasColumnType(&quot;decimal(18,2)&quot;);
+
+                    b.HasKey(&quot;IdIndexador&quot;);
+
+                    b.ToTable(&quot;IndiceTipo&quot;, (string)null);
+                });
+
+            modelBuilder.Entity(&quot;B3.Domain.Models.TipoTitulo&quot;, b =&gt;
+                {
+                    b.Property&lt;int&gt;(&quot;IdTipoTitulo&quot;)
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType(&quot;int&quot;);
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property&lt;int&gt;(&quot;IdTipoTitulo&quot;), 1L, 1);
+
+                    b.Property&lt;string&gt;(&quot;Descricao&quot;)
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType(&quot;nvarchar(100)&quot;);
+
+                    b.Property&lt;bool&gt;(&quot;RendaFixa&quot;)
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType(&quot;bit&quot;)
+                        .HasDefaultValue(true);
+
+                    b.HasKey(&quot;IdTipoTitulo&quot;);
+
+                    b.ToTable(&quot;TituloTipo&quot;, (string)null);
+                });
+
+            modelBuilder.Entity(&quot;B3.Domain.Models.Titulo&quot;, b =&gt;
+                {
+                    b.Property&lt;Guid&gt;(&quot;IdTitulo&quot;)
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType(&quot;uniqueidentifier&quot;);
+
+                    b.Property&lt;int&gt;(&quot;IdIndexador&quot;)
+                        .HasColumnType(&quot;int&quot;)
+                        .HasColumnName(&quot;IdIndiceTipo&quot;);
+
+                    b.Property&lt;int&gt;(&quot;IdTipoTitulo&quot;)
+                        .HasColumnType(&quot;int&quot;);
+
+                    b.Property&lt;string&gt;(&quot;NomeTitulo&quot;)
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType(&quot;nvarchar(255)&quot;);
+
+                    b.Property&lt;bool&gt;(&quot;PosFixado&quot;)
+                        .HasColumnType(&quot;bit&quot;);
+
+                    b.Property&lt;decimal&gt;(&quot;TaxaRendimento&quot;)
+                        .HasColumnType(&quot;decimal(18,2)&quot;);
+
+                    b.HasKey(&quot;IdTitulo&quot;);
+
+                    b.HasIndex(&quot;IdIndexador&quot;);
+
+                    b.HasIndex(&quot;IdTipoTitulo&quot;);
+
+                    b.ToTable(&quot;Titulo&quot;, (string)null);
+                });
+
+            modelBuilder.Entity(&quot;B3.Domain.Models.Titulo&quot;, b =&gt;
+                {
+                    b.HasOne(&quot;B3.Domain.Models.Indexador&quot;, &quot;Indexador&quot;)
+                        .WithMany(&quot;Titulos&quot;)
+                        .HasForeignKey(&quot;IdIndexador&quot;)
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne(&quot;B3.Domain.Models.TipoTitulo&quot;, &quot;TipoTitulo&quot;)
+                        .WithMany(&quot;Titulos&quot;)
+                        .HasForeignKey(&quot;IdTipoTitulo&quot;)
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation(&quot;Indexador&quot;);
+
+                    b.Navigation(&quot;TipoTitulo&quot;);
+                });
+
+            modelBuilder.Entity(&quot;B3.Domain.Models.Indexador&quot;, b =&gt;
+                {
+                    b.Navigation(&quot;Titulos&quot;);
+                });
+
+            modelBuilder.Entity(&quot;B3.Domain.Models.TipoTitulo&quot;, b =&gt;
+                {
+                    b.Navigation(&quot;Titulos&quot;);
+                });
+#pragma warning restore 612, 618
+        }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[17,9,17,10,0],[19,13,21,71,0],[23,13,23,85,0],[25,13,26,17,0],[26,17,26,18,0],[26,18,27,21,0],[27,21,29,60,0],[29,60,31,21,0],[31,21,34,57,0],[34,57,36,21,0],[36,21,37,57,0],[37,57,39,21,0],[39,21,40,47,0],[40,47,42,21,0],[42,21,43,47,0],[43,47,45,21,0],[45,21,45,56,0],[45,56,47,21,0],[47,21,47,69,0],[47,69,48,17,0],[48,17,48,18,0],[48,18,48,20,0],[50,13,51,17,0],[51,17,51,18,0],[51,18,52,21,0],[52,21,55,56,0],[55,56,57,21,0],[57,21,57,113,0],[57,113,59,21,0],[59,21,60,53,0],[60,53,62,21,0],[62,21,65,57,0],[65,57,67,21,0],[67,21,68,57,0],[68,57,70,21,0],[70,21,70,45,0],[70,45,72,21,0],[72,21,72,59,0],[72,59,73,17,0],[73,17,73,18,0],[73,18,73,20,0],[75,13,76,17,0],[76,17,76,18,0],[76,18,77,21,0],[77,21,79,47,0],[79,47,81,21,0],[81,21,81,114,0],[81,114,83,21,0],[83,21,86,57,0],[86,57,88,21,0],[88,21,91,48,0],[91,48,93,21,0],[93,21,93,46,0],[93,46,95,21,0],[95,21,95,59,0],[95,59,96,17,0],[96,17,96,18,0],[96,18,96,20,0],[98,13,99,17,0],[99,17,99,18,0],[99,18,100,21,0],[100,21,102,60,0],[102,60,104,21,0],[104,21,106,56,0],[106,56,108,21,0],[108,21,109,47,0],[109,47,111,21,0],[111,21,114,57,0],[114,57,116,21,0],[116,21,117,47,0],[117,47,119,21,0],[119,21,120,57,0],[120,57,122,21,0],[122,21,122,42,0],[122,42,124,21,0],[124,21,124,47,0],[124,47,126,21,0],[126,21,126,48,0],[126,48,128,21,0],[128,21,128,55,0],[128,55,129,17,0],[129,17,129,18,0],[129,18,129,20,0],[131,13,132,17,0],[132,17,132,18,0],[132,18,133,21,0],[133,21,137,39,0],[137,39,139,21,0],[139,21,143,39,0],[143,39,145,21,0],[145,21,145,47,0],[145,47,147,21,0],[147,21,147,48,0],[147,48,148,17,0],[148,17,148,18,0],[148,18,148,20,0],[150,13,151,17,0],[151,17,151,18,0],[151,18,152,21,0],[152,21,152,45,0],[152,45,153,17,0],[153,17,153,18,0],[153,18,153,20,0],[155,13,156,17,0],[156,17,156,18,0],[156,18,157,21,0],[157,21,157,45,0],[157,45,158,17,0],[158,17,158,18,0],[158,18,158,20,0],[160,9,160,10,0]]);
+    </script>
+  </body>
+</html>

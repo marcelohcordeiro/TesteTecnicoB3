@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>E:\TesteTecnicoB3\B3.Infra.Data\ServiceExtensions.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using B3.Infra.Data.Context;
+using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Text;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using B3.Domain.Interfaces;
+using B3.Infra.Data.Repositories;
+using B3.Application.Services;
+
+namespace B3.Infra.Data
+{
+    public static class ServiceExtensions
+    {
+        
+        public static void ConfigurePersistenceApp(this IServiceCollection services, IConfiguration configuration)
+        {
+            //Database connection
+            var conn = configuration.GetConnectionString(&quot;DefaultConnection&quot;);
+
+            services.AddDbContext&lt;AppDbContext&gt;(options =&gt; options
+            .UseSqlServer(conn));          
+            
+        }
+
+        public static void ConfigureInjectionDependencyApp(this IServiceCollection services)
+        {
+            //Dependency Injection
+            services.AddScoped&lt;ITituloService, TituloService&gt;();
+            services.AddScoped&lt;ITituloRepository, TituloRepository&gt;();
+            services.AddScoped&lt;IDescontoImpostoRendaService, DescontoImpostoRendaService&gt;();
+            services.AddScoped&lt;IDescontoImpostoRendaRepository, DescontoImpostoRendaRepository&gt;();
+
+        }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[21,9,21,10,0],[23,13,23,79,0],[25,13,25,60,0],[25,60,26,32,0],[26,32,26,34,0],[28,9,28,10,0],[31,9,31,10,0],[33,13,33,65,0],[34,13,34,71,0],[35,13,35,93,0],[36,13,36,99,0],[38,9,38,10,0]]);
+    </script>
+  </body>
+</html>

@@ -60,15 +60,132 @@ namespace B3.Tests
 
 
                 databaseContext.Titulos!.Add(new Titulo { IdTitulo = new Guid("C2CCD2C3-2A9E-45A9-B407-3FDFE5D95FED"), NomeTitulo = "CDB Teste", IdTipoTitulo = 3, PosFixado = true, IdIndexador = 2, TaxaRendimento = 108 });
+                databaseContext.Titulos!.Add(new Titulo { IdTitulo = new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), NomeTitulo = "Tesouro Pré-Fixado Teste", IdTipoTitulo = 1, PosFixado = false, IdIndexador = 2, TaxaRendimento = 1 });
 
                 await databaseContext.SaveChangesAsync();
             }
             return databaseContext;
         }
 
+        [Fact]
+        public async Task ShouldReturnErrorWhenValorInicialEqualsZero()
+        {
+            //AAA
+            //Arrange
+            AppDbContext appDbContext = await getDatabaseDbContext();
+            TituloRepository tituloRepository = new TituloRepository(appDbContext);
+            DescontoImpostoRendaRepository descontoImpostoRendaRepository = new DescontoImpostoRendaRepository(appDbContext);
+            DescontoImpostoRendaService descontoImpostoRendaService = new DescontoImpostoRendaService(descontoImpostoRendaRepository);
+            TituloService tituloService = new TituloService(tituloRepository, descontoImpostoRendaService);
+
+
+            //Act
+            Exception exception = await Record.ExceptionAsync(() => tituloService.GetSimularTitulo(new Guid("C2CCD2C3-2A9E-45A9-B407-3FDFE5D95FED"), 0, 2));
+
+            //Assert
+            Assert.Equal("Valor Inicial deve ser maior que zero", exception.Message);
+
+        }
 
         [Fact]
-        public async Task ShouldReturnValorBruto()
+        public async Task ShouldReturnErrorWhenQtdeMesesEqualsZero()
+        {
+            //AAA
+            //Arrange
+            AppDbContext appDbContext = await getDatabaseDbContext();
+            TituloRepository tituloRepository = new TituloRepository(appDbContext);
+            DescontoImpostoRendaRepository descontoImpostoRendaRepository = new DescontoImpostoRendaRepository(appDbContext);
+            DescontoImpostoRendaService descontoImpostoRendaService = new DescontoImpostoRendaService(descontoImpostoRendaRepository);
+            TituloService tituloService = new TituloService(tituloRepository, descontoImpostoRendaService);
+
+            //Act
+            Exception exception = await Record.ExceptionAsync(() => tituloService.GetSimularTitulo(new Guid("C2CCD2C3-2A9E-45A9-B407-3FDFE5D95FED"), 1000, 0));
+
+            //Assert
+            Assert.Equal("Quantidade de meses investidos deve ser no minimo igual a um.", exception.Message);
+
+        }
+
+        [Fact]
+        public async Task ShouldReturnImpostoRendaPercentualBasedOnQtdeMeses()
+        {
+            //AAA
+            //Arrange
+            AppDbContext appDbContext = await getDatabaseDbContext();
+            TituloRepository tituloRepository = new TituloRepository(appDbContext);
+            DescontoImpostoRendaRepository descontoImpostoRendaRepository = new DescontoImpostoRendaRepository(appDbContext);
+            DescontoImpostoRendaService descontoImpostoRendaService = new DescontoImpostoRendaService(descontoImpostoRendaRepository);
+            TituloService tituloService = new TituloService(tituloRepository, descontoImpostoRendaService);
+
+
+
+            int qtdMes = 1;
+            decimal percentual;
+
+            while (qtdMes <= 30)
+            {
+                if (qtdMes <= 6)
+                {
+                    percentual = (decimal)22.5;
+                }
+                else if (qtdMes <= 12)
+                {
+                    percentual = (decimal)20;
+
+                }
+                else if (qtdMes <= 24)
+                {
+                    percentual = (decimal)17.5;
+
+                }
+                else
+                {
+                    percentual = (decimal)15;
+                }
+
+                //Act
+                var simulacaoMes = await tituloService.GetSimularTitulo(new Guid("C2CCD2C3-2A9E-45A9-B407-3FDFE5D95FED"), 1000, qtdMes);
+
+                //Assert
+                Assert.Equal(percentual, (simulacaoMes.ValorDescontoImpostoRenda * 100 / simulacaoMes.ValorRendimento), 2);
+
+                qtdMes++;
+            }
+
+
+        }
+
+        [Fact]
+        public async Task ShouldReturnSimulacaoWithMaximum1200MonthsWhenItsExcedeed()
+        {
+            //AAA
+            //Arrange
+            AppDbContext appDbContext = await getDatabaseDbContext();
+            TituloRepository tituloRepository = new TituloRepository(appDbContext);
+            DescontoImpostoRendaRepository descontoImpostoRendaRepository = new DescontoImpostoRendaRepository(appDbContext);
+            DescontoImpostoRendaService descontoImpostoRendaService = new DescontoImpostoRendaService(descontoImpostoRendaRepository);
+            TituloService tituloService = new TituloService(tituloRepository, descontoImpostoRendaService);
+
+            int maxQtdeMesesInvestimento = 1200;
+            int qtdeMesInvestimento = 1250;
+            
+
+            //Act
+            var simulacaoMesMax = await tituloService.GetSimularTitulo(new Guid("C2CCD2C3-2A9E-45A9-B407-3FDFE5D95FED"), 1000, maxQtdeMesesInvestimento);
+            var simulacaoMes = await tituloService.GetSimularTitulo(new Guid("C2CCD2C3-2A9E-45A9-B407-3FDFE5D95FED"), 1000, qtdeMesInvestimento);
+
+            //Assert
+            Assert.Equal(simulacaoMesMax.ValorTotalBruto, simulacaoMes.ValorTotalBruto);
+            Assert.Equal(simulacaoMesMax.ValorTotalInvestido, simulacaoMes.ValorTotalInvestido);
+            Assert.Equal(simulacaoMesMax.ValorRendimento, simulacaoMes.ValorRendimento);
+            Assert.Equal(simulacaoMesMax.ValorDescontoImpostoRenda, simulacaoMes.ValorDescontoImpostoRenda);
+            Assert.Equal(simulacaoMesMax.ValorTotalLiquido, simulacaoMes.ValorTotalLiquido);
+
+        }
+
+        #region PosFixado
+        [Fact]
+        public async Task ShouldReturnValorBrutoPosFixado()
         {
             //AAA
             //Arrange
@@ -201,7 +318,7 @@ namespace B3.Tests
         }
 
         [Fact]
-        public async Task ShouldReturnValorLiquido()
+        public async Task ShouldReturnValorLiquidoPosFixado()
         {
             //AAA
             //Arrange
@@ -332,10 +449,12 @@ namespace B3.Tests
             Assert.Equal(Math.Round((decimal)1286.18, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalLiquido, 2, MidpointRounding.ToZero), 2);
         }
 
+        #endregion
 
 
+        #region PreFixado
         [Fact]
-        public async Task ShouldReturnErrorWhenValorInicialEqualsZero()
+        public async Task ShouldReturnValorBrutoPreFixado()
         {
             //AAA
             //Arrange
@@ -345,36 +464,130 @@ namespace B3.Tests
             DescontoImpostoRendaService descontoImpostoRendaService = new DescontoImpostoRendaService(descontoImpostoRendaRepository);
             TituloService tituloService = new TituloService(tituloRepository, descontoImpostoRendaService);
 
+            //Act + Assert  - Mes 1
+            var simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 1);
+            Assert.Equal(Math.Round((decimal)1010.00, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalBruto, 2, MidpointRounding.ToZero), 2);
 
-            //Act
-            Exception exception = await Record.ExceptionAsync(() => tituloService.GetSimularTitulo(new Guid("C2CCD2C3-2A9E-45A9-B407-3FDFE5D95FED"), 0, 2));
+            //Act + Assert  - Mes 2
+            simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 2);
+            Assert.Equal(Math.Round((decimal)1020.10, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalBruto, 2, MidpointRounding.ToZero), 2);
 
-            //Assert
-            Assert.Equal("Valor Inicial deve ser maior que zero", exception.Message);
+            //Act + Assert  - Mes 3
+            simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 3);
+            Assert.Equal(Math.Round((decimal)1030.30, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalBruto, 2, MidpointRounding.ToZero), 2);
+
+            //Act + Assert  - Mes 4
+            simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 4);
+            Assert.Equal(Math.Round((decimal)1040.60, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalBruto, 2, MidpointRounding.ToZero), 2);
+
+            //Act + Assert  - Mes 5
+            simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 5);
+            Assert.Equal(Math.Round((decimal)1051.01, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalBruto, 2, MidpointRounding.ToZero), 2);
+
+            //Act + Assert  - Mes 6
+            simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 6);
+            Assert.Equal(Math.Round((decimal)1061.52, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalBruto, 2, MidpointRounding.ToZero), 2);
+
+            //Act + Assert  - Mes 7
+            simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 7);
+            Assert.Equal(Math.Round((decimal)1072.13, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalBruto, 2, MidpointRounding.ToZero), 2);
+
+            //Act + Assert  - Mes 8
+            simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 8);
+            Assert.Equal(Math.Round((decimal)1082.85, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalBruto, 2, MidpointRounding.ToZero), 2);
+
+            //Act + Assert  - Mes 9
+            simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 9);
+            Assert.Equal(Math.Round((decimal)1093.68, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalBruto, 2, MidpointRounding.ToZero), 2);
+
+            //Act + Assert  - Mes 10
+            simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 10);
+            Assert.Equal(Math.Round((decimal)1104.62, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalBruto, 2, MidpointRounding.ToZero), 2);
+
+            //Act + Assert  - Mes 11
+            simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 11);
+            Assert.Equal(Math.Round((decimal)1115.66, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalBruto, 2, MidpointRounding.ToZero), 2);
+
+            //Act + Assert  - Mes 12
+            simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 12);
+            Assert.Equal(Math.Round((decimal)1126.82, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalBruto, 2, MidpointRounding.ToZero), 2);
+
+            //Act + Assert  - Mes 13
+            simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 13);
+            Assert.Equal(Math.Round((decimal)1138.09, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalBruto, 2, MidpointRounding.ToZero), 2);
+
+            //Act + Assert  - Mes 14
+            simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 14);
+            Assert.Equal(Math.Round((decimal)1149.47, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalBruto, 2, MidpointRounding.ToZero), 2);
+
+            //Act + Assert  - Mes 15
+            simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 15);
+            Assert.Equal(Math.Round((decimal)1160.96, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalBruto, 2, MidpointRounding.ToZero), 2);
+
+            //Act + Assert  - Mes 16
+            simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 16);
+            Assert.Equal(Math.Round((decimal)1172.57, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalBruto, 2, MidpointRounding.ToZero), 2);
+
+            //Act + Assert  - Mes 17
+            simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 17);
+            Assert.Equal(Math.Round((decimal)1184.30, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalBruto, 2, MidpointRounding.ToZero), 2);
+
+            //Act + Assert  - Mes 18
+            simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 18);
+            Assert.Equal(Math.Round((decimal)1196.14, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalBruto, 2, MidpointRounding.ToZero), 2);
+
+            //Act + Assert  - Mes 19
+            simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 19);
+            Assert.Equal(Math.Round((decimal)1208.10, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalBruto, 2, MidpointRounding.ToZero), 2);
+
+            //Act + Assert  - Mes 20
+            simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 20);
+            Assert.Equal(Math.Round((decimal)1220.19, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalBruto, 2, MidpointRounding.ToZero), 2);
+
+            //Act + Assert  - Mes 21
+            simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 21);
+            Assert.Equal(Math.Round((decimal)1232.39, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalBruto, 2, MidpointRounding.ToZero), 2);
+
+            //Act + Assert  - Mes 22
+            simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 22);
+            Assert.Equal(Math.Round((decimal)1244.71, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalBruto, 2, MidpointRounding.ToZero), 2);
+
+            //Act + Assert  - Mes 23
+            simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 23);
+            Assert.Equal(Math.Round((decimal)1257.16, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalBruto, 2, MidpointRounding.ToZero), 2);
+
+            //Act + Assert  - Mes 24
+            simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 24);
+            Assert.Equal(Math.Round((decimal)1269.73, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalBruto, 2, MidpointRounding.ToZero), 2);
+
+            //Act + Assert  - Mes 25
+            simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 25);
+            Assert.Equal(Math.Round((decimal)1282.43, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalBruto, 2, MidpointRounding.ToZero), 2);
+
+            //Act + Assert  - Mes 26
+            simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 26);
+            Assert.Equal(Math.Round((decimal)1295.25, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalBruto, 2, MidpointRounding.ToZero), 2);
+
+            //Act + Assert  - Mes 27
+            simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 27);
+            Assert.Equal(Math.Round((decimal)1308.20, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalBruto, 2, MidpointRounding.ToZero), 2);
+
+            //Act + Assert  - Mes 28
+            simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 28);
+            Assert.Equal(Math.Round((decimal)1321.29, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalBruto, 2, MidpointRounding.ToZero), 2);
+
+            //Act + Assert  - Mes 29
+            simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 29);
+            Assert.Equal(Math.Round((decimal)1334.50, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalBruto, 2, MidpointRounding.ToZero), 2);
+
+            //Act + Assert  - Mes 30
+            simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 30);
+            Assert.Equal(Math.Round((decimal)1347.84, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalBruto, 2, MidpointRounding.ToZero), 2);
 
         }
 
         [Fact]
-        public async Task ShouldReturnErrorWhenQtdeMesesEqualsZero()
-        {
-            //AAA
-            //Arrange
-            AppDbContext appDbContext = await getDatabaseDbContext();
-            TituloRepository tituloRepository = new TituloRepository(appDbContext);
-            DescontoImpostoRendaRepository descontoImpostoRendaRepository = new DescontoImpostoRendaRepository(appDbContext);
-            DescontoImpostoRendaService descontoImpostoRendaService = new DescontoImpostoRendaService(descontoImpostoRendaRepository);
-            TituloService tituloService = new TituloService(tituloRepository, descontoImpostoRendaService);           
-
-            //Act
-            Exception exception = await Record.ExceptionAsync(() => tituloService.GetSimularTitulo(new Guid("C2CCD2C3-2A9E-45A9-B407-3FDFE5D95FED"), 1000, 0));
-
-            //Assert
-            Assert.Equal("Quantidade de meses investidos deve ser no minimo igual a um.", exception.Message);
-
-        }
-
-        [Fact]
-        public async Task ShouldReturnImpostoRendaPercentualBasedOnQtdeMeses()
+        public async Task ShouldReturnValorLiquidoPreFixado()
         {
             //AAA
             //Arrange
@@ -384,44 +597,128 @@ namespace B3.Tests
             DescontoImpostoRendaService descontoImpostoRendaService = new DescontoImpostoRendaService(descontoImpostoRendaRepository);
             TituloService tituloService = new TituloService(tituloRepository, descontoImpostoRendaService);
 
+            //Act + Assert  - Mes 1
+            var simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 1);
+            Assert.Equal(Math.Round((decimal)1007.75, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalLiquido, 2, MidpointRounding.ToZero), 2);
 
+            //Act + Assert  - Mes 2
+            simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 2);
+            Assert.Equal(Math.Round((decimal)1015.57, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalLiquido, 2, MidpointRounding.ToZero), 2);
 
-            int qtdMes = 1;
-            decimal percentual;
+            //Act + Assert  - Mes 3
+            simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 3);
+            Assert.Equal(Math.Round((decimal)1023.48, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalLiquido, 2, MidpointRounding.ToZero), 2);
 
-            while (qtdMes <= 30)
-            {
-                if (qtdMes <= 6)
-                {
-                    percentual = (decimal)22.5;
-                }
-                else if (qtdMes <= 12)
-                {
-                    percentual = (decimal)20;
+            //Act + Assert  - Mes 4
+            simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 4);
+            Assert.Equal(Math.Round((decimal)1031.46, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalLiquido, 2, MidpointRounding.ToZero), 2);
 
-                }
-                else if (qtdMes <= 24)
-                {
-                    percentual = (decimal)17.5;
+            //Act + Assert  - Mes 5
+            simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 5);
+            Assert.Equal(Math.Round((decimal)1039.53, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalLiquido, 2, MidpointRounding.ToZero), 2);
 
-                }
-                else
-                {
-                    percentual = (decimal)15;
-                }
+            //Act + Assert  - Mes 6
+            simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 6);
+            Assert.Equal(Math.Round((decimal)1047.67, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalLiquido, 2, MidpointRounding.ToZero), 2);
 
-                //Act
-                var simulacaoMes = await tituloService.GetSimularTitulo(new Guid("C2CCD2C3-2A9E-45A9-B407-3FDFE5D95FED"), 1000, qtdMes);
+            //Act + Assert  - Mes 7
+            simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 7);
+            Assert.Equal(Math.Round((decimal)1057.70, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalLiquido, 2, MidpointRounding.ToZero), 2);
 
-                //Assert
-                Assert.Equal(percentual, (simulacaoMes.ValorDescontoImpostoRenda * 100 / simulacaoMes.ValorRendimento), 2);
+            //Act + Assert  - Mes 8
+            simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 8);
+            Assert.Equal(Math.Round((decimal)1066.28, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalLiquido, 2, MidpointRounding.ToZero), 2);
 
-                qtdMes++;
-            }
+            //Act + Assert  - Mes 9
+            simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 9);
+            Assert.Equal(Math.Round((decimal)1074.94, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalLiquido, 2, MidpointRounding.ToZero), 2);
 
+            //Act + Assert  - Mes 10
+            simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 10);
+            Assert.Equal(Math.Round((decimal)1083.69, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalLiquido, 2, MidpointRounding.ToZero), 2);
 
+            //Act + Assert  - Mes 11
+            simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 11);
+            Assert.Equal(Math.Round((decimal)1092.53, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalLiquido, 2, MidpointRounding.ToZero), 2);
+
+            //Act + Assert  - Mes 12
+            simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 12);
+            Assert.Equal(Math.Round((decimal)1101.46, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalLiquido, 2, MidpointRounding.ToZero), 2);
+
+            //Act + Assert  - Mes 13
+            simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 13);
+            Assert.Equal(Math.Round((decimal)1113.92, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalLiquido, 2, MidpointRounding.ToZero), 2);
+
+            //Act + Assert  - Mes 14
+            simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 14);
+            Assert.Equal(Math.Round((decimal)1123.31, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalLiquido, 2, MidpointRounding.ToZero), 2);
+
+            //Act + Assert  - Mes 15
+            simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 15);
+            Assert.Equal(Math.Round((decimal)1132.79, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalLiquido, 2, MidpointRounding.ToZero), 2);
+
+            //Act + Assert  - Mes 16
+            simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 16);
+            Assert.Equal(Math.Round((decimal)1142.37, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalLiquido, 2, MidpointRounding.ToZero), 2);
+
+            //Act + Assert  - Mes 17
+            simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 17);
+            Assert.Equal(Math.Round((decimal)1152.05, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalLiquido, 2, MidpointRounding.ToZero), 2);
+
+            //Act + Assert  - Mes 18
+            simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 18);
+            Assert.Equal(Math.Round((decimal)1161.82, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalLiquido, 2, MidpointRounding.ToZero), 2);
+
+            //Act + Assert  - Mes 19
+            simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 19);
+            Assert.Equal(Math.Round((decimal)1171.68, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalLiquido, 2, MidpointRounding.ToZero), 2);
+
+            //Act + Assert  - Mes 20
+            simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 20);
+            Assert.Equal(Math.Round((decimal)1181.65, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalLiquido, 2, MidpointRounding.ToZero), 2);
+
+            //Act + Assert  - Mes 21
+            simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 21);
+            Assert.Equal(Math.Round((decimal)1191.72, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalLiquido, 2, MidpointRounding.ToZero), 2);
+
+            //Act + Assert  - Mes 22
+            simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 22);
+            Assert.Equal(Math.Round((decimal)1201.89, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalLiquido, 2, MidpointRounding.ToZero), 2);
+
+            //Act + Assert  - Mes 23
+            simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 23);
+            Assert.Equal(Math.Round((decimal)1212.15, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalLiquido, 2, MidpointRounding.ToZero), 2);
+
+            //Act + Assert  - Mes 24
+            simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 24);
+            Assert.Equal(Math.Round((decimal)1222.53, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalLiquido, 2, MidpointRounding.ToZero), 2);
+
+            //Act + Assert  - Mes 25
+            simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 25);
+            Assert.Equal(Math.Round((decimal)1240.06, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalLiquido, 2, MidpointRounding.ToZero), 2);
+
+            //Act + Assert  - Mes 26
+            simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 26);
+            Assert.Equal(Math.Round((decimal)1250.96, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalLiquido, 2, MidpointRounding.ToZero), 2);
+
+            //Act + Assert  - Mes 27
+            simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 27);
+            Assert.Equal(Math.Round((decimal)1261.97, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalLiquido, 2, MidpointRounding.ToZero), 2);
+
+            //Act + Assert  - Mes 28
+            simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 28);
+            Assert.Equal(Math.Round((decimal)1273.09, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalLiquido, 2, MidpointRounding.ToZero), 2);
+
+            //Act + Assert  - Mes 29
+            simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 29);
+            Assert.Equal(Math.Round((decimal)1284.32, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalLiquido, 2, MidpointRounding.ToZero), 2);
+
+            //Act + Assert  - Mes 30
+            simulacao = await tituloService.GetSimularTitulo(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), 1000, 30);
+            Assert.Equal(Math.Round((decimal)1295.67, 2, MidpointRounding.ToZero), Math.Round(simulacao.ValorTotalLiquido, 2, MidpointRounding.ToZero), 2);
         }
 
+        #endregion
 
     }
 }

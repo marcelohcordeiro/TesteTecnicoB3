@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>E:\TesteTecnicoB3\B3.Application\Exceptions\MinimumValueException.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Serialization;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace B3.Application.Exceptions
+{
+    [Serializable]
+    public class MinimumValueException : Exception
+    {
+        protected MinimumValueException()
+        {
+            
+        }
+
+        public MinimumValueException(string? message) : base(message)
+        {
+            
+        }
+
+        public MinimumValueException(string? message, Exception? innerException) : base(message, innerException)
+        {
+            
+        }
+
+        protected MinimumValueException(SerializationInfo info, StreamingContext context) : base(info, context) { }
+       
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[13,9,13,42,0],[14,9,14,10,0],[16,9,16,10,0],[18,57,18,70,1],[19,9,19,10,1],[21,9,21,10,1],[23,84,23,113,0],[24,9,24,10,0],[26,9,26,10,0],[28,93,28,112,0],[28,113,28,114,0],[28,115,28,116,0]]);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>E:\TesteTecnicoB3\B3.Domain\Models\Titulo.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
+
+namespace B3.Domain.Models
+{
+    public class Titulo
+    {
+        public Titulo()
+        {
+            
+        }
+
+        [Key]
+        public Guid IdTitulo { get; set; }
+        [Required]
+        [MaxLength(250)]
+        public string? NomeTitulo { get; set; }
+        [Required]
+        public int IdTipoTitulo { get; set; }
+        public TipoTitulo? TipoTitulo { get; set; }
+
+        [Required]
+        public bool PosFixado { get; set; }
+        
+        public int IdIndexador{ get; set; }
+        
+        public Indexador? Indexador { get; set; }
+      
+        public decimal TaxaRendimento { get; set; }
+        
+        
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[8,9,8,24,1],[9,9,9,10,1],[11,9,11,10,1],[14,32,14,36,0],[14,37,14,41,1],[17,37,17,41,0],[17,42,17,46,1],[19,35,19,39,0],[19,40,19,44,1],[20,41,20,45,0],[20,46,20,50,0],[23,33,23,37,1],[23,38,23,42,1],[25,33,25,37,0],[25,38,25,42,1],[27,39,27,43,1],[27,44,27,48,0],[29,41,29,45,1],[29,46,29,50,1]]);
+    </script>
+  </body>
+</html>

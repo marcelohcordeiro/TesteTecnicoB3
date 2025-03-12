@@ -188,7 +188,9 @@ Automatic Analysis will not be available between 07:00 CET and 09:00 CET</Proper
   </ServerSettings>
   <LocalSettings>
     <Property Name="sonar.host.url">https://sonarcloud.io</Property>
+    <Property Name="sonar.cs.dotcover.reportsPaths">dotCover.Output.html</Property>
     <Property Name="sonar.organization">marcelohcordeiro</Property>
+    <Property Name="sonar.exclusions">dotCover.Output.html,dotCover.Output/**</Property>
   </LocalSettings>
   <ScannerOptsSettings />
   <AnalyzersSettings>

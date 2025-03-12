@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>E:\TesteTecnicoB3\B3.Application\Validators\TituloValidator.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using B3.Domain.Models;
+using FluentValidation;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace B3.Application.Validators
+{
+    public class TituloValidator : AbstractValidator&lt;Titulo&gt;
+    {
+        public TituloValidator()
+        {
+            RuleFor(x =&gt; x.NomeTitulo)
+                .NotEmpty().WithMessage(&quot;O nome do t&#237;tulo deve ser preenchido.&quot;);
+
+            RuleFor(x =&gt; x.IdTipoTitulo)
+                .NotEmpty().WithMessage(&quot;O tipo de titulo &#233; obrigat&#243;rio.&quot;);
+
+            RuleFor(x =&gt; x.TaxaRendimento)
+                .NotEmpty().WithMessage(&quot;A taxa de rendimento do titulo deve ser informada.&quot;)
+                .GreaterThan(0).WithMessage(&quot;O valor da taxa de rendimento deve ser maior que zero.&quot;);
+        }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[13,9,13,33,0],[14,9,14,10,0],[15,13,16,82,0],[18,13,19,76,0],[21,13,23,103,0],[24,9,24,10,0]]);
+    </script>
+  </body>
+</html>

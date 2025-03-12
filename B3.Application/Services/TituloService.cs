@@ -12,7 +12,7 @@ namespace B3.Application.Services
         private readonly ITituloRepository _tituloRepository;
         private readonly IDescontoImpostoRendaService _impostoService;
         private readonly int MaximoQtdeMeses = 1200;
-        public readonly int MinimoQtdeMeses = 1;
+       
         public TituloService(ITituloRepository tituloRepository, IDescontoImpostoRendaService impostoService)
         {
 
@@ -57,14 +57,9 @@ namespace B3.Application.Services
             decimal valorTotal = valorInicial;
 
             /*Ajuste para limitar o looping - SonarQube Issues*/
-            if(MinimoQtdeMeses > qtdeMesesInvestimento)
-            {
-                qtdeMesesInvestimento = MinimoQtdeMeses;
-            } 
-            else if(qtdeMesesInvestimento > MaximoQtdeMeses)
-            {   
+            if(qtdeMesesInvestimento > MaximoQtdeMeses)              
                 qtdeMesesInvestimento = MaximoQtdeMeses;
-            }
+            
 
             SimulacaoTituloViewModel simulacao = new SimulacaoTituloViewModel();    
 

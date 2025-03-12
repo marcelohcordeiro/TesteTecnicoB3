@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>E:\TesteTecnicoB3\B3.Infra.Data\Configuration\TipoTituloConfiguration.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using B3.Domain.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace B3.Infra.Data.Configuration
+{
+    public class TipoTituloConfiguration : IEntityTypeConfiguration&lt;TipoTitulo&gt;
+    {
+        public void Configure(EntityTypeBuilder&lt;TipoTitulo&gt; builder)
+        {
+            builder.ToTable(&quot;TituloTipo&quot;);
+
+            builder.Property(x =&gt; x.IdTipoTitulo).IsRequired();
+            builder.Property(x =&gt; x.Descricao).IsRequired();
+            builder.Property(x =&gt; x.RendaFixa).HasDefaultValue(true).IsRequired();
+
+
+            builder.HasKey(x =&gt; x.IdTipoTitulo);
+            builder.HasMany(x =&gt; x.Titulos).WithOne(f =&gt; f.TipoTitulo).HasForeignKey(f =&gt; f.IdTipoTitulo);
+
+        }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[11,9,11,10,1],[12,13,12,43,1],[14,13,14,64,1],[15,13,15,61,1],[16,13,16,83,1],[19,13,19,49,1],[20,13,20,107,1],[22,9,22,10,1]]);
+    </script>
+  </body>
+</html>
