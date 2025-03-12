@@ -65,8 +65,8 @@ namespace B3.Tests
             {
 
 
-                databaseContext.Titulos!.Add(new Titulo { IdTitulo = new Guid("C2CCD2C3-2A9E-45A9-B407-3FDFE5D95FED"), NomeTitulo = "CDB Teste", IdTipoTitulo = 3, PosFixado = true, IdIndexador = 2, TaxaRendimento = 108 });
-                databaseContext.Titulos!.Add(new Titulo { IdTitulo = new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), NomeTitulo = "Tesouro Pré-Fixado Teste", IdTipoTitulo = 1, PosFixado = false, IdIndexador = 2, TaxaRendimento = 1 });
+                databaseContext.Titulos!.Add(new Titulo { IdTitulo = new Guid("05089fb1-5905-4787-a55f-11ad96b760f3"), NomeTitulo = "CDB Teste", IdTipoTitulo = 3, PosFixado = true, IdIndexador = 2, TaxaRendimento = 108 });
+                databaseContext.Titulos!.Add(new Titulo { IdTitulo = new Guid("39310027-9094-45b2-b596-da5668f07420"), NomeTitulo = "Tesouro Pré-Fixado Teste", IdTipoTitulo = 1, PosFixado = false, IdIndexador = 2, TaxaRendimento = 1 });
                 databaseContext.Titulos!.Add(new Titulo { IdTitulo = new Guid("4baa7a4a-6ec3-4e52-b011-a82824830686"), NomeTitulo = "FII Teste", IdTipoTitulo = 4, PosFixado = false, IdIndexador = 2, TaxaRendimento = 1 });
 
                 await databaseContext.SaveChangesAsync();
@@ -99,8 +99,8 @@ namespace B3.Tests
             Assert.Equal(tituloFII.PosFixado, retTituloFII.PosFixado);
 
             //Act 
-            var retTesouro = await tituloService.GetTituloById(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"));
-            Titulo tituloTesouro = new Titulo { IdTitulo = new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), NomeTitulo = "Tesouro Pré-Fixado Teste", IdTipoTitulo = 1, PosFixado = false, IdIndexador = 2, TaxaRendimento = 1 };
+            var retTesouro = await tituloService.GetTituloById(new Guid("39310027-9094-45b2-b596-da5668f07420"));
+            Titulo tituloTesouro = new Titulo { IdTitulo = new Guid("39310027-9094-45b2-b596-da5668f07420"), NomeTitulo = "Tesouro Pré-Fixado Teste", IdTipoTitulo = 1, PosFixado = false, IdIndexador = 2, TaxaRendimento = 1 };
             //Assert
             Assert.Equal(tituloTesouro.IdTitulo, retTesouro.IdTitulo);
             Assert.Equal(tituloTesouro.NomeTitulo, retTesouro.NomeTitulo);
@@ -111,8 +111,8 @@ namespace B3.Tests
 
 
             //Act 
-            var retCDB = await tituloService.GetTituloById(new Guid("C2CCD2C3-2A9E-45A9-B407-3FDFE5D95FED"));
-            Titulo tituloCDB = new Titulo { IdTitulo = new Guid("C2CCD2C3-2A9E-45A9-B407-3FDFE5D95FED"), NomeTitulo = "CDB Teste", IdTipoTitulo = 3, PosFixado = true, IdIndexador = 2, TaxaRendimento = 108 };
+            var retCDB = await tituloService.GetTituloById(new Guid("05089fb1-5905-4787-a55f-11ad96b760f3"));
+            Titulo tituloCDB = new Titulo { IdTitulo = new Guid("05089fb1-5905-4787-a55f-11ad96b760f3"), NomeTitulo = "CDB Teste", IdTipoTitulo = 3, PosFixado = true, IdIndexador = 2, TaxaRendimento = 108 };
             //Assert
             Assert.Equal(tituloCDB.IdTitulo, retCDB.IdTitulo);
             Assert.Equal(tituloCDB.NomeTitulo, retCDB.NomeTitulo);
@@ -141,8 +141,8 @@ namespace B3.Tests
 
             //Assert
             Assert.Equal(2, titulos.Count);
-            Assert.Equal(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), titulos[0].IdTitulo);
-            Assert.Equal(new Guid("C2CCD2C3-2A9E-45A9-B407-3FDFE5D95FED"), titulos[1].IdTitulo);
+            Assert.Equal(new Guid("39310027-9094-45b2-b596-da5668f07420"), titulos[0].IdTitulo);
+            Assert.Equal(new Guid("05089fb1-5905-4787-a55f-11ad96b760f3"), titulos[1].IdTitulo);
             
 
         }
@@ -164,9 +164,9 @@ namespace B3.Tests
 
             //Assert
             Assert.Equal(3, titulos.Count);
-            Assert.Equal(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), titulos[0].IdTitulo);
+            Assert.Equal(new Guid("39310027-9094-45b2-b596-da5668f07420"), titulos[0].IdTitulo);
             Assert.Equal(new Guid("4baa7a4a-6ec3-4e52-b011-a82824830686"), titulos[1].IdTitulo);                        
-            Assert.Equal(new Guid("C2CCD2C3-2A9E-45A9-B407-3FDFE5D95FED"), titulos[2].IdTitulo);
+            Assert.Equal(new Guid("05089fb1-5905-4787-a55f-11ad96b760f3"), titulos[2].IdTitulo);
 
 
         }

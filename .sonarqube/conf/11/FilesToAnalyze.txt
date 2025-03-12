@@ -8,6 +8,7 @@ C:\Users\VS\.nuget\packages\microsoft.testplatform.testhost\17.1.0\build\netcore
 C:\Users\VS\.nuget\packages\xunit.runner.visualstudio\2.4.3\build\netcoreapp2.1\xunit.runner.visualstudio.dotnetcore.testadapter.dll
 C:\Users\VS\.nuget\packages\xunit.runner.visualstudio\2.4.3\build\netcoreapp2.1\xunit.runner.reporters.netcoreapp10.dll
 C:\Users\VS\.nuget\packages\xunit.runner.visualstudio\2.4.3\build\netcoreapp2.1\xunit.runner.utility.netcoreapp10.dll
+E:\TesteTecnicoB3\B3.Tests\TestResults\1eb7ab4e-a888-43d2-afcf-4b636e8b9b0f\VS_DESKTOP-55OC56N_2025-03-12.12_20_00.coverage
 E:\TesteTecnicoB3\B3.Tests\TestResults\35f17d8c-4ea9-4c81-a970-72a6dcd876e7\VS_DESKTOP-55OC56N_2025-03-12.09_40_33.coverage
 E:\TesteTecnicoB3\B3.Tests\TestResults\51b24e15-da83-46db-8d32-f5d5b9e24627\VS_DESKTOP-55OC56N_2025-03-12.10_19_10.coverage
 E:\TesteTecnicoB3\B3.Tests\TestResults\aea27115-33e7-4b03-a72b-5383310c07b8\VS_DESKTOP-55OC56N_2025-03-12.09_57_01.coverage
