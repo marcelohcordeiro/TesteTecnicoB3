@@ -26,6 +26,7 @@
     <ProjectReference Include="..\B3.Application\B3.Application.csproj" />
     <ProjectReference Include="..\B3.Domain\B3.Domain.csproj" />
     <ProjectReference Include="..\B3.Infra.Data\B3.Infra.Data.csproj" />
+    <ProjectReference Include="..\B3.WebApi\B3.WebApi.csproj" />
   </ItemGroup>
 
 </Project>

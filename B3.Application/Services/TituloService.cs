@@ -1,4 +1,5 @@
 ﻿
+using B3.Application.Exceptions;
 using B3.Domain.Interfaces;
 using B3.Domain.Models;
 using B3.Domain.ViewModels;
@@ -31,9 +32,12 @@ namespace B3.Application.Services
 
         public async Task<SimulacaoTituloViewModel> GetSimularTitulo(Guid idTitulo, decimal valorInicial, int qtdeMesesInvestimento)
         {
-            
+            if (valorInicial == 0)
+                throw new MinimumValueException("Valor Inicial deve ser maior que zero");
 
-           
+            if (qtdeMesesInvestimento < 1)
+                throw new MinimumValueException("Quantidade de meses investidos deve ser no minimo igual a um.");
+
 
             var simulacao = await CalcularSimulacaoTitulo(idTitulo, valorInicial, qtdeMesesInvestimento);
 
