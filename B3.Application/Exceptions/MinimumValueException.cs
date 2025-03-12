@@ -10,20 +10,11 @@ namespace B3.Application.Exceptions
     [Serializable]
     public class MinimumValueException : Exception
     {
-        protected MinimumValueException()
-        {
-            
-        }
-
+        
         public MinimumValueException(string? message) : base(message)
         {
             
-        }
-
-        public MinimumValueException(string? message, Exception? innerException) : base(message, innerException)
-        {
-            
-        }
+        }               
 
         protected MinimumValueException(SerializationInfo info, StreamingContext context) : base(info, context) { }
        

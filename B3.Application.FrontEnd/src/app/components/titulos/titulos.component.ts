@@ -65,7 +65,7 @@ export class TitulosComponent {
       ]),
       quantidadeMeses: new FormControl(null, [
         Validators.required,
-        Validators.min(1),
+        Validators.min(2),
         Validators.pattern(this.numberRegex),
       ]),
     });
@@ -118,11 +118,28 @@ export class TitulosComponent {
     this.tituloService.simularTitulo(this.simulacaoInput).subscribe({
       next: (ret: any) => {
         this.resultadoSimulacao = ret;
+
+        this.resultadoSimulacao.valorTotalBruto =
+          this.arredondarPraBaixoDecimal(ret.valorTotalBruto);
+        this.resultadoSimulacao.valorRendimento =
+          this.arredondarPraBaixoDecimal(ret.valorRendimento);
+        this.resultadoSimulacao.valorTotalInvestido =
+          this.arredondarPraBaixoDecimal(ret.valorTotalInvestido);
+        this.resultadoSimulacao.valorDescontoImpostoRenda =
+          this.arredondarPraBaixoDecimal(ret.valorDescontoImpostoRenda);
+        this.resultadoSimulacao.valorTotalLiquido =
+          this.arredondarPraBaixoDecimal(ret.valorTotalLiquido);
       },
       error: (error: any) => {
         console.log(error);
       },
       complete: () => {},
     });
+  }
+
+  arredondarPraBaixoDecimal(textoDecimal: string): string {
+    return (
+      parseInt((parseFloat(textoDecimal) * 100).toString()) / 100
+    ).toString();
   }
 }

@@ -35,8 +35,8 @@ namespace B3.Application.Services
             if (valorInicial == 0)
                 throw new MinimumValueException("Valor Inicial deve ser maior que zero");
 
-            if (qtdeMesesInvestimento < 1)
-                throw new MinimumValueException("Quantidade de meses investidos deve ser no minimo igual a um.");
+            if (qtdeMesesInvestimento <= 1)
+                throw new MinimumValueException("Quantidade de meses investidos deve ser maior que um");
 
 
             var simulacao = await CalcularSimulacaoTitulo(idTitulo, valorInicial, qtdeMesesInvestimento);
