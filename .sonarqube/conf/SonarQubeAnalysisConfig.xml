@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <AnalysisConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.sonarsource.com/msbuild/integration/2015/1">
-  <SonarConfigDir>C:\Users\m.cordeiro\Documents\TesteTecnicoB3\.sonarqube\conf</SonarConfigDir>
-  <SonarOutputDir>C:\Users\m.cordeiro\Documents\TesteTecnicoB3\.sonarqube\out</SonarOutputDir>
-  <SonarBinDir>C:\Users\m.cordeiro\Documents\TesteTecnicoB3\.sonarqube\bin</SonarBinDir>
-  <SonarScannerWorkingDirectory>C:\Users\m.cordeiro\Documents\TesteTecnicoB3</SonarScannerWorkingDirectory>
-  <JavaExePath>C:\Users\m.cordeiro\.sonar\cache\4bafe2e94439c8193fc8c68247cb0dbaf4e80265b903288f63f128304f129bbe\OpenJDK17U-jre_x64_windows_hotspot_17.0.11_9.zip_extracted\jdk-17.0.11+9-jre/bin/java.exe</JavaExePath>
+  <SonarConfigDir>E:\TesteTecnicoB3\.sonarqube\conf</SonarConfigDir>
+  <SonarOutputDir>E:\TesteTecnicoB3\.sonarqube\out</SonarOutputDir>
+  <SonarBinDir>E:\TesteTecnicoB3\.sonarqube\bin</SonarBinDir>
+  <SonarScannerWorkingDirectory>E:\TesteTecnicoB3</SonarScannerWorkingDirectory>
+  <JavaExePath>C:\Users\VS\.sonar\cache\4bafe2e94439c8193fc8c68247cb0dbaf4e80265b903288f63f128304f129bbe\OpenJDK17U-jre_x64_windows_hotspot_17.0.11_9.zip_extracted\jdk-17.0.11+9-jre/bin/java.exe</JavaExePath>
   <ScanAllAnalysis>true</ScanAllAnalysis>
   <HasBeginStepCommandLineCredentials>true</HasBeginStepCommandLineCredentials>
   <SonarQubeHostUrl>https://sonarcloud.io</SonarQubeHostUrl>
@@ -15,8 +15,8 @@
     <ConfigSetting Id="TfsUri" />
     <ConfigSetting Id="VsCoverageConverterToolPath" />
     <ConfigSetting Id="UnchangedFilesPath" />
-    <ConfigSetting Id="sonar.pullrequest.cache.basepath" Value="C:\Users\m.cordeiro\Documents\TesteTecnicoB3" />
-    <ConfigSetting Id="settings.file.path" Value="C:\Users\m.cordeiro\.dotnet\tools\.store\dotnet-sonarscanner\9.2.1\dotnet-sonarscanner\9.2.1\tools\netcoreapp3.1\any\SonarQube.Analysis.xml" />
+    <ConfigSetting Id="sonar.pullrequest.cache.basepath" Value="E:\TesteTecnicoB3" />
+    <ConfigSetting Id="settings.file.path" Value="C:\Users\VS\.dotnet\tools\.store\dotnet-sonarscanner\9.2.1\dotnet-sonarscanner\9.2.1\tools\netcoreapp3.1\any\SonarQube.Analysis.xml" />
   </AdditionalConfig>
   <ServerSettings>
     <Property Name="sonar.project.monorepo.enabled">false</Property>
@@ -194,42 +194,42 @@ Automatic Analysis will not be available between 07:00 CET and 09:00 CET</Proper
   <AnalyzersSettings>
     <AnalyzerSettings>
       <Language>cs</Language>
-      <RulesetPath>C:\Users\m.cordeiro\Documents\TesteTecnicoB3\.sonarqube\conf\Sonar-cs.ruleset</RulesetPath>
-      <DeactivatedRulesetPath>C:\Users\m.cordeiro\Documents\TesteTecnicoB3\.sonarqube\conf\Sonar-cs-none.ruleset</DeactivatedRulesetPath>
+      <RulesetPath>E:\TesteTecnicoB3\.sonarqube\conf\Sonar-cs.ruleset</RulesetPath>
+      <DeactivatedRulesetPath>E:\TesteTecnicoB3\.sonarqube\conf\Sonar-cs-none.ruleset</DeactivatedRulesetPath>
       <AnalyzerPlugins>
         <AnalyzerPlugin Key="securitycsharpfrontend" Version="11.0.0.35320" StaticResourceName="SonarAnalyzer.Security-11.0.0.35320.zip">
           <AssemblyPaths>
-            <Path>C:\Users\m.cordeiro\AppData\Local\Temp\.sonarqube\resources\0\Google.Protobuf.License.txt</Path>
-            <Path>C:\Users\m.cordeiro\AppData\Local\Temp\.sonarqube\resources\0\SonarAnalyzer.Security.dll</Path>
+            <Path>C:\Users\VS\AppData\Local\Temp\.sonarqube\resources\0\Google.Protobuf.License.txt</Path>
+            <Path>C:\Users\VS\AppData\Local\Temp\.sonarqube\resources\0\SonarAnalyzer.Security.dll</Path>
           </AssemblyPaths>
         </AnalyzerPlugin>
         <AnalyzerPlugin Key="csharpenterprise" Version="10.7.0.110445" StaticResourceName="SonarAnalyzer-csharpenterprise-10.7.0.110445.zip">
           <AssemblyPaths>
-            <Path>C:\Users\m.cordeiro\AppData\Local\Temp\.sonarqube\resources\1\SonarAnalyzer.CSharp.dll</Path>
-            <Path>C:\Users\m.cordeiro\AppData\Local\Temp\.sonarqube\resources\1\SonarAnalyzer.Enterprise.CSharp.dll</Path>
-            <Path>C:\Users\m.cordeiro\AppData\Local\Temp\.sonarqube\resources\1\THIRD-PARTY-NOTICES.txt</Path>
+            <Path>C:\Users\VS\AppData\Local\Temp\.sonarqube\resources\1\SonarAnalyzer.CSharp.dll</Path>
+            <Path>C:\Users\VS\AppData\Local\Temp\.sonarqube\resources\1\SonarAnalyzer.Enterprise.CSharp.dll</Path>
+            <Path>C:\Users\VS\AppData\Local\Temp\.sonarqube\resources\1\THIRD-PARTY-NOTICES.txt</Path>
           </AssemblyPaths>
         </AnalyzerPlugin>
       </AnalyzerPlugins>
       <AdditionalFilePaths>
-        <Path>C:\Users\m.cordeiro\Documents\TesteTecnicoB3\.sonarqube\conf\cs\SonarLint.xml</Path>
+        <Path>E:\TesteTecnicoB3\.sonarqube\conf\cs\SonarLint.xml</Path>
       </AdditionalFilePaths>
     </AnalyzerSettings>
     <AnalyzerSettings>
       <Language>vbnet</Language>
-      <RulesetPath>C:\Users\m.cordeiro\Documents\TesteTecnicoB3\.sonarqube\conf\Sonar-vbnet.ruleset</RulesetPath>
-      <DeactivatedRulesetPath>C:\Users\m.cordeiro\Documents\TesteTecnicoB3\.sonarqube\conf\Sonar-vbnet-none.ruleset</DeactivatedRulesetPath>
+      <RulesetPath>E:\TesteTecnicoB3\.sonarqube\conf\Sonar-vbnet.ruleset</RulesetPath>
+      <DeactivatedRulesetPath>E:\TesteTecnicoB3\.sonarqube\conf\Sonar-vbnet-none.ruleset</DeactivatedRulesetPath>
       <AnalyzerPlugins>
         <AnalyzerPlugin Key="vbnetenterprise" Version="10.7.0.110445" StaticResourceName="SonarAnalyzer-vbnetenterprise-10.7.0.110445.zip">
           <AssemblyPaths>
-            <Path>C:\Users\m.cordeiro\AppData\Local\Temp\.sonarqube\resources\2\SonarAnalyzer.Enterprise.VisualBasic.dll</Path>
-            <Path>C:\Users\m.cordeiro\AppData\Local\Temp\.sonarqube\resources\2\SonarAnalyzer.VisualBasic.dll</Path>
-            <Path>C:\Users\m.cordeiro\AppData\Local\Temp\.sonarqube\resources\2\THIRD-PARTY-NOTICES.txt</Path>
+            <Path>C:\Users\VS\AppData\Local\Temp\.sonarqube\resources\2\SonarAnalyzer.Enterprise.VisualBasic.dll</Path>
+            <Path>C:\Users\VS\AppData\Local\Temp\.sonarqube\resources\2\SonarAnalyzer.VisualBasic.dll</Path>
+            <Path>C:\Users\VS\AppData\Local\Temp\.sonarqube\resources\2\THIRD-PARTY-NOTICES.txt</Path>
           </AssemblyPaths>
         </AnalyzerPlugin>
       </AnalyzerPlugins>
       <AdditionalFilePaths>
-        <Path>C:\Users\m.cordeiro\Documents\TesteTecnicoB3\.sonarqube\conf\vbnet\SonarLint.xml</Path>
+        <Path>E:\TesteTecnicoB3\.sonarqube\conf\vbnet\SonarLint.xml</Path>
       </AdditionalFilePaths>
     </AnalyzerSettings>
   </AnalyzersSettings>

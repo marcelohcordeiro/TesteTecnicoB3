@@ -8,14 +8,16 @@ namespace B3.Tests
 {
     public class CalculoSimulacaoTituloTests
     {
-        private async Task<AppDbContext> getDatabaseDbContext()
+        private static async Task<AppDbContext> getDatabaseDbContext()
         {
             var options = new DbContextOptionsBuilder<AppDbContext>()
             .UseInMemoryDatabase(databaseName: "TestDb")
             .Options;
 
             var databaseContext = new AppDbContext(options);
-            databaseContext.Database.EnsureCreated();
+            await databaseContext.Database.EnsureCreatedAsync();
+
+           
 
 
             if (!await databaseContext.Indexadores!.AnyAsync())
