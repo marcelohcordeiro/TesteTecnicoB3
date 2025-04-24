@@ -1,9 +1,3 @@
-﻿E:\TesteTecnicoB3\B3.Domain\Interfaces\IDescontoImpostoRendaRepository.cs
-E:\TesteTecnicoB3\B3.Domain\Interfaces\IDescontoImpostoRendaService.cs
-E:\TesteTecnicoB3\B3.Domain\Interfaces\ITituloRepository.cs
-E:\TesteTecnicoB3\B3.Domain\Interfaces\ITituloService.cs
-E:\TesteTecnicoB3\B3.Domain\Models\DescontoImpostoRenda.cs
-E:\TesteTecnicoB3\B3.Domain\Models\Indexador.cs
-E:\TesteTecnicoB3\B3.Domain\Models\TipoTitulo.cs
-E:\TesteTecnicoB3\B3.Domain\Models\Titulo.cs
-E:\TesteTecnicoB3\B3.Domain\ViewModels\SimulacaoTituloViewModel.cs
+﻿E:\TesteTecnicoB3\docker-compose.override.yml
+E:\TesteTecnicoB3\docker-compose.yml
+E:\TesteTecnicoB3\.dockerignore
