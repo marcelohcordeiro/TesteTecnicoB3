@@ -1,9 +1,14 @@
 using System.Diagnostics.Metrics;
+using B3.Application.Inputs;
 using B3.Application.Services;
+using B3.Application.WebApi.Controllers;
 using B3.Domain.Models;
+using B3.Domain.ViewModels;
 using B3.Infra.Data.Context;
 using B3.Infra.Data.Repositories;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Frameworks;
 
 namespace B3.Tests
 {
@@ -81,13 +86,21 @@ namespace B3.Tests
             DescontoImpostoRendaRepository descontoImpostoRendaRepository = new DescontoImpostoRendaRepository(appDbContext);
             DescontoImpostoRendaService descontoImpostoRendaService = new DescontoImpostoRendaService(descontoImpostoRendaRepository);
             TituloService tituloService = new TituloService(tituloRepository, descontoImpostoRendaService);
+            TituloController tituloController = new TituloController(tituloService);
 
 
-            //Act
-            Exception exception = await Record.ExceptionAsync(() => tituloService.GetSimularTitulo(new Guid("C2CCD2C3-2A9E-45A9-B407-3FDFE5D95FED"), 0, 2));
+            //Act            
+            SimulacaoTituloInputModel input = new SimulacaoTituloInputModel();
+            input.IdTitulo = new Guid("C2CCD2C3-2A9E-45A9-B407-3FDFE5D95FED");
+            input.ValorInicial = 0;
+            input.QuantidadeMesesInvestimento = 2;
+
+            var result = (BadRequestObjectResult)await tituloController.GetSimulacaoTitulo(input);             
 
             //Assert
-            Assert.Equal("Valor Inicial deve ser maior que zero", exception.Message);
+            Assert.Equal(400, result.StatusCode);
+            Assert.Equal("Valor Inicial deve ser maior que zero", result.Value);
+            
 
         }
 
@@ -101,12 +114,19 @@ namespace B3.Tests
             DescontoImpostoRendaRepository descontoImpostoRendaRepository = new DescontoImpostoRendaRepository(appDbContext);
             DescontoImpostoRendaService descontoImpostoRendaService = new DescontoImpostoRendaService(descontoImpostoRendaRepository);
             TituloService tituloService = new TituloService(tituloRepository, descontoImpostoRendaService);
+            TituloController tituloController = new TituloController(tituloService);
 
             //Act
-            Exception exception = await Record.ExceptionAsync(() => tituloService.GetSimularTitulo(new Guid("C2CCD2C3-2A9E-45A9-B407-3FDFE5D95FED"), 1000, 0));
+            SimulacaoTituloInputModel input = new SimulacaoTituloInputModel();
+            input.IdTitulo = new Guid("C2CCD2C3-2A9E-45A9-B407-3FDFE5D95FED");
+            input.ValorInicial = 1000;
+            input.QuantidadeMesesInvestimento = 0;
 
+            var result = (BadRequestObjectResult)await tituloController.GetSimulacaoTitulo(input);
+            
             //Assert
-            Assert.Equal("Quantidade de meses investidos deve ser maior que um", exception.Message);
+            Assert.Equal(400, result.StatusCode);
+            Assert.Equal("Quantidade de meses investidos deve ser maior que um", result.Value);
 
         }
 
@@ -120,7 +140,7 @@ namespace B3.Tests
             DescontoImpostoRendaRepository descontoImpostoRendaRepository = new DescontoImpostoRendaRepository(appDbContext);
             DescontoImpostoRendaService descontoImpostoRendaService = new DescontoImpostoRendaService(descontoImpostoRendaRepository);
             TituloService tituloService = new TituloService(tituloRepository, descontoImpostoRendaService);
-
+            TituloController tituloController = new TituloController(tituloService);
 
 
             int qtdMes = 2;
@@ -146,10 +166,16 @@ namespace B3.Tests
                 }
 
                 //Act
-                var simulacaoMes = await tituloService.GetSimularTitulo(new Guid("C2CCD2C3-2A9E-45A9-B407-3FDFE5D95FED"), 1000, qtdMes);
+                SimulacaoTituloInputModel input = new SimulacaoTituloInputModel();
+                input.IdTitulo = new Guid("C2CCD2C3-2A9E-45A9-B407-3FDFE5D95FED");
+                input.ValorInicial = 1000;
+                input.QuantidadeMesesInvestimento = qtdMes;
+
+                var result = (OkObjectResult)await tituloController.GetSimulacaoTitulo(input);
+                var resultObject = (SimulacaoTituloViewModel)result.Value;                
 
                 //Assert
-                Assert.Equal(percentual, (simulacaoMes.ValorDescontoImpostoRenda * 100 / simulacaoMes.ValorRendimento), 2);
+                Assert.Equal(percentual, (resultObject.ValorDescontoImpostoRenda * 100 / resultObject.ValorRendimento), 2);
 
                 qtdMes++;
             }
@@ -167,21 +193,35 @@ namespace B3.Tests
             DescontoImpostoRendaRepository descontoImpostoRendaRepository = new DescontoImpostoRendaRepository(appDbContext);
             DescontoImpostoRendaService descontoImpostoRendaService = new DescontoImpostoRendaService(descontoImpostoRendaRepository);
             TituloService tituloService = new TituloService(tituloRepository, descontoImpostoRendaService);
+            TituloController tituloController = new TituloController(tituloService);
 
             int maxQtdeMesesInvestimento = 1200;
             int qtdeMesInvestimento = 1250;
-            
+
 
             //Act
-            var simulacaoMesMax = await tituloService.GetSimularTitulo(new Guid("C2CCD2C3-2A9E-45A9-B407-3FDFE5D95FED"), 1000, maxQtdeMesesInvestimento);
-            var simulacaoMes = await tituloService.GetSimularTitulo(new Guid("C2CCD2C3-2A9E-45A9-B407-3FDFE5D95FED"), 1000, qtdeMesInvestimento);
+            SimulacaoTituloInputModel inputMesMax = new SimulacaoTituloInputModel();
+            inputMesMax.IdTitulo = new Guid("C2CCD2C3-2A9E-45A9-B407-3FDFE5D95FED");
+            inputMesMax.ValorInicial = 1000;
+            inputMesMax.QuantidadeMesesInvestimento = maxQtdeMesesInvestimento;
 
+            var resultMesMax = (OkObjectResult)await tituloController.GetSimulacaoTitulo(inputMesMax);
+            var resultMesMaxObject = (SimulacaoTituloViewModel)resultMesMax.Value;
+
+            SimulacaoTituloInputModel input = new SimulacaoTituloInputModel();
+            input.IdTitulo = new Guid("C2CCD2C3-2A9E-45A9-B407-3FDFE5D95FED");
+            input.ValorInicial = 1000;            
+            input.QuantidadeMesesInvestimento = qtdeMesInvestimento;
+
+            var resultMes = (OkObjectResult)await tituloController.GetSimulacaoTitulo(input);
+            var resultMesObject = (SimulacaoTituloViewModel)resultMes.Value;
+           
             //Assert
-            Assert.Equal(simulacaoMesMax.ValorTotalBruto, simulacaoMes.ValorTotalBruto);
-            Assert.Equal(simulacaoMesMax.ValorTotalInvestido, simulacaoMes.ValorTotalInvestido);
-            Assert.Equal(simulacaoMesMax.ValorRendimento, simulacaoMes.ValorRendimento);
-            Assert.Equal(simulacaoMesMax.ValorDescontoImpostoRenda, simulacaoMes.ValorDescontoImpostoRenda);
-            Assert.Equal(simulacaoMesMax.ValorTotalLiquido, simulacaoMes.ValorTotalLiquido);
+            Assert.Equal(resultMesMaxObject.ValorTotalBruto, resultMesObject.ValorTotalBruto);
+            Assert.Equal(resultMesMaxObject.ValorTotalInvestido, resultMesObject.ValorTotalInvestido);
+            Assert.Equal(resultMesMaxObject.ValorRendimento, resultMesObject.ValorRendimento);
+            Assert.Equal(resultMesMaxObject.ValorDescontoImpostoRenda, resultMesObject.ValorDescontoImpostoRenda);
+            Assert.Equal(resultMesMaxObject.ValorTotalLiquido, resultMesObject.ValorTotalLiquido);
 
         }
 
@@ -722,43 +762,49 @@ namespace B3.Tests
             DescontoImpostoRendaRepository descontoImpostoRendaRepository = new DescontoImpostoRendaRepository(appDbContext);
             DescontoImpostoRendaService descontoImpostoRendaService = new DescontoImpostoRendaService(descontoImpostoRendaRepository);
             TituloService tituloService = new TituloService(tituloRepository, descontoImpostoRendaService);
+            TituloController tituloController = new TituloController(tituloService);
 
 
             //Act 
-            var retTituloFII = await tituloService.GetTituloById(new Guid("4baa7a4a-6ec3-4e52-b011-a82824830686"));
+            var returnTituloFII = (OkObjectResult)await tituloController.GetTituloById(new Guid("4baa7a4a-6ec3-4e52-b011-a82824830686"));
+            var returnTituloFIIObject = (Titulo)returnTituloFII.Value;
             Titulo tituloFII = new Titulo { IdTitulo = new Guid("4baa7a4a-6ec3-4e52-b011-a82824830686"), NomeTitulo = "FII Teste", IdTipoTitulo = 4, PosFixado = false, IdIndexador = 2, TaxaRendimento = 1 };
 
             //Assert
-            Assert.Equal(tituloFII.IdTitulo, retTituloFII.IdTitulo);
-            Assert.Equal(tituloFII.NomeTitulo, retTituloFII.NomeTitulo);
-            Assert.Equal(tituloFII.TaxaRendimento, retTituloFII.TaxaRendimento);
-            Assert.Equal(tituloFII.IdIndexador, retTituloFII.IdIndexador);
-            Assert.Equal(tituloFII.IdTitulo, retTituloFII.IdTitulo);
-            Assert.Equal(tituloFII.PosFixado, retTituloFII.PosFixado);
+            Assert.Equal(tituloFII.IdTitulo, returnTituloFIIObject.IdTitulo);
+            Assert.Equal(tituloFII.NomeTitulo, returnTituloFIIObject.NomeTitulo);
+            Assert.Equal(tituloFII.TaxaRendimento, returnTituloFIIObject.TaxaRendimento);
+            Assert.Equal(tituloFII.IdIndexador, returnTituloFIIObject.IdIndexador);
+            Assert.Equal(tituloFII.IdTitulo, returnTituloFIIObject.IdTitulo);
+            Assert.Equal(tituloFII.PosFixado, returnTituloFIIObject.PosFixado);
 
             //Act 
-            var retTesouro = await tituloService.GetTituloById(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"));
+            var returnTituloTesouro = (OkObjectResult)await tituloController.GetTituloById(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"));
+            var returnTituloTesouroObject = (Titulo)returnTituloTesouro.Value;            
             Titulo tituloTesouro = new Titulo { IdTitulo = new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), NomeTitulo = "Tesouro Pré-Fixado Teste", IdTipoTitulo = 1, PosFixado = false, IdIndexador = 2, TaxaRendimento = 1 };
+            
             //Assert
-            Assert.Equal(tituloTesouro.IdTitulo, retTesouro.IdTitulo);
-            Assert.Equal(tituloTesouro.NomeTitulo, retTesouro.NomeTitulo);
-            Assert.Equal(tituloTesouro.TaxaRendimento, retTesouro.TaxaRendimento);
-            Assert.Equal(tituloTesouro.IdIndexador, retTesouro.IdIndexador);
-            Assert.Equal(tituloTesouro.IdTitulo, retTesouro.IdTitulo);
-            Assert.Equal(tituloTesouro.PosFixado, retTesouro.PosFixado);
+            Assert.Equal(tituloTesouro.IdTitulo, returnTituloTesouroObject.IdTitulo);
+            Assert.Equal(tituloTesouro.NomeTitulo, returnTituloTesouroObject.NomeTitulo);
+            Assert.Equal(tituloTesouro.TaxaRendimento, returnTituloTesouroObject.TaxaRendimento);
+            Assert.Equal(tituloTesouro.IdIndexador, returnTituloTesouroObject.IdIndexador);
+            Assert.Equal(tituloTesouro.IdTitulo, returnTituloTesouroObject.IdTitulo);
+            Assert.Equal(tituloTesouro.PosFixado, returnTituloTesouroObject.PosFixado);
 
 
             //Act 
-            var retCDB = await tituloService.GetTituloById(new Guid("C2CCD2C3-2A9E-45A9-B407-3FDFE5D95FED"));
+            var returnTituloCDB = (OkObjectResult)await tituloController.GetTituloById(new Guid("C2CCD2C3-2A9E-45A9-B407-3FDFE5D95FED"));
+            var returnTituloCDBObject = (Titulo)returnTituloCDB.Value;            
             Titulo tituloCDB = new Titulo { IdTitulo = new Guid("C2CCD2C3-2A9E-45A9-B407-3FDFE5D95FED"), NomeTitulo = "CDB Teste", IdTipoTitulo = 3, PosFixado = true, IdIndexador = 2, TaxaRendimento = 108 };
+            
             //Assert
-            Assert.Equal(tituloCDB.IdTitulo, retCDB.IdTitulo);
-            Assert.Equal(tituloCDB.NomeTitulo, retCDB.NomeTitulo);
-            Assert.Equal(tituloCDB.TaxaRendimento, retCDB.TaxaRendimento);
-            Assert.Equal(tituloCDB.IdIndexador, retCDB.IdIndexador);
-            Assert.Equal(tituloCDB.TaxaRendimento, retCDB.TaxaRendimento);
-            Assert.Equal(tituloCDB.IdTitulo, retCDB.IdTitulo);
-            Assert.Equal(tituloCDB.PosFixado, retCDB.PosFixado);
+            Assert.Equal(tituloCDB.IdTitulo, returnTituloCDBObject.IdTitulo);
+            Assert.Equal(tituloCDB.NomeTitulo, returnTituloCDBObject.NomeTitulo);
+            Assert.Equal(tituloCDB.TaxaRendimento, returnTituloCDBObject.TaxaRendimento);
+            Assert.Equal(tituloCDB.IdIndexador, returnTituloCDBObject.IdIndexador);
+            Assert.Equal(tituloCDB.TaxaRendimento, returnTituloCDBObject.TaxaRendimento);
+            Assert.Equal(tituloCDB.IdTitulo, returnTituloCDBObject.IdTitulo);
+            Assert.Equal(tituloCDB.PosFixado, returnTituloCDBObject.PosFixado);
 
         }
 
@@ -772,10 +818,12 @@ namespace B3.Tests
             DescontoImpostoRendaRepository descontoImpostoRendaRepository = new DescontoImpostoRendaRepository(appDbContext);
             DescontoImpostoRendaService descontoImpostoRendaService = new DescontoImpostoRendaService(descontoImpostoRendaRepository);
             TituloService tituloService = new TituloService(tituloRepository, descontoImpostoRendaService);
+            TituloController tituloController = new TituloController(tituloService);
 
 
             //Act
-            var titulos = await tituloService.GetTitulosRendaFixa();
+            var retorno = (OkObjectResult)await tituloController.GetTitulosRendaFixa();
+            var titulos = (List<Titulo>)retorno.Value;            
 
             //Assert
             Assert.Equal(2, titulos.Count);
@@ -795,10 +843,12 @@ namespace B3.Tests
             DescontoImpostoRendaRepository descontoImpostoRendaRepository = new DescontoImpostoRendaRepository(appDbContext);
             DescontoImpostoRendaService descontoImpostoRendaService = new DescontoImpostoRendaService(descontoImpostoRendaRepository);
             TituloService tituloService = new TituloService(tituloRepository, descontoImpostoRendaService);
+            TituloController tituloController = new TituloController(tituloService);
 
 
             //Act
-            var titulos = await tituloService.GetTitulos();
+            var retorno = (OkObjectResult)await tituloController.GetTitulos();
+            var titulos = (List<Titulo>)retorno.Value;            
 
             //Assert
             Assert.Equal(3, titulos.Count);
