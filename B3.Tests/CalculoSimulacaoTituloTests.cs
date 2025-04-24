@@ -172,10 +172,10 @@ namespace B3.Tests
                 input.QuantidadeMesesInvestimento = qtdMes;
 
                 var result = (OkObjectResult)await tituloController.GetSimulacaoTitulo(input);
-                var resultObject = (SimulacaoTituloViewModel)result.Value;                
+                var resultObject = (SimulacaoTituloViewModel)result.Value!;                
 
                 //Assert
-                Assert.Equal(percentual, (resultObject.ValorDescontoImpostoRenda * 100 / resultObject.ValorRendimento), 2);
+                Assert.Equal(percentual, (resultObject!.ValorDescontoImpostoRenda * 100 / resultObject!.ValorRendimento), 2);
 
                 qtdMes++;
             }
@@ -206,7 +206,7 @@ namespace B3.Tests
             inputMesMax.QuantidadeMesesInvestimento = maxQtdeMesesInvestimento;
 
             var resultMesMax = (OkObjectResult)await tituloController.GetSimulacaoTitulo(inputMesMax);
-            var resultMesMaxObject = (SimulacaoTituloViewModel)resultMesMax.Value;
+            var resultMesMaxObject = (SimulacaoTituloViewModel)resultMesMax.Value!;
 
             SimulacaoTituloInputModel input = new SimulacaoTituloInputModel();
             input.IdTitulo = new Guid("C2CCD2C3-2A9E-45A9-B407-3FDFE5D95FED");
@@ -214,14 +214,14 @@ namespace B3.Tests
             input.QuantidadeMesesInvestimento = qtdeMesInvestimento;
 
             var resultMes = (OkObjectResult)await tituloController.GetSimulacaoTitulo(input);
-            var resultMesObject = (SimulacaoTituloViewModel)resultMes.Value;
+            var resultMesObject = (SimulacaoTituloViewModel)resultMes.Value!;
            
             //Assert
-            Assert.Equal(resultMesMaxObject.ValorTotalBruto, resultMesObject.ValorTotalBruto);
-            Assert.Equal(resultMesMaxObject.ValorTotalInvestido, resultMesObject.ValorTotalInvestido);
-            Assert.Equal(resultMesMaxObject.ValorRendimento, resultMesObject.ValorRendimento);
-            Assert.Equal(resultMesMaxObject.ValorDescontoImpostoRenda, resultMesObject.ValorDescontoImpostoRenda);
-            Assert.Equal(resultMesMaxObject.ValorTotalLiquido, resultMesObject.ValorTotalLiquido);
+            Assert.Equal(resultMesMaxObject!.ValorTotalBruto, resultMesObject!.ValorTotalBruto);
+            Assert.Equal(resultMesMaxObject!.ValorTotalInvestido, resultMesObject!.ValorTotalInvestido);
+            Assert.Equal(resultMesMaxObject!.ValorRendimento, resultMesObject!.ValorRendimento);
+            Assert.Equal(resultMesMaxObject!.ValorDescontoImpostoRenda, resultMesObject!.ValorDescontoImpostoRenda);
+            Assert.Equal(resultMesMaxObject!.ValorTotalLiquido, resultMesObject!.ValorTotalLiquido);
 
         }
 
@@ -767,44 +767,44 @@ namespace B3.Tests
 
             //Act 
             var returnTituloFII = (OkObjectResult)await tituloController.GetTituloById(new Guid("4baa7a4a-6ec3-4e52-b011-a82824830686"));
-            var returnTituloFIIObject = (Titulo)returnTituloFII.Value;
+            var returnTituloFIIObject = (Titulo)returnTituloFII.Value!;
             Titulo tituloFII = new Titulo { IdTitulo = new Guid("4baa7a4a-6ec3-4e52-b011-a82824830686"), NomeTitulo = "FII Teste", IdTipoTitulo = 4, PosFixado = false, IdIndexador = 2, TaxaRendimento = 1 };
 
             //Assert
-            Assert.Equal(tituloFII.IdTitulo, returnTituloFIIObject.IdTitulo);
-            Assert.Equal(tituloFII.NomeTitulo, returnTituloFIIObject.NomeTitulo);
-            Assert.Equal(tituloFII.TaxaRendimento, returnTituloFIIObject.TaxaRendimento);
-            Assert.Equal(tituloFII.IdIndexador, returnTituloFIIObject.IdIndexador);
-            Assert.Equal(tituloFII.IdTitulo, returnTituloFIIObject.IdTitulo);
-            Assert.Equal(tituloFII.PosFixado, returnTituloFIIObject.PosFixado);
+            Assert.Equal(tituloFII.IdTitulo, returnTituloFIIObject!.IdTitulo);
+            Assert.Equal(tituloFII.NomeTitulo, returnTituloFIIObject!.NomeTitulo);
+            Assert.Equal(tituloFII.TaxaRendimento, returnTituloFIIObject!.TaxaRendimento);
+            Assert.Equal(tituloFII.IdIndexador, returnTituloFIIObject!.IdIndexador);
+            Assert.Equal(tituloFII.IdTitulo, returnTituloFIIObject!.IdTitulo);
+            Assert.Equal(tituloFII.PosFixado, returnTituloFIIObject!.PosFixado);
 
             //Act 
             var returnTituloTesouro = (OkObjectResult)await tituloController.GetTituloById(new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"));
-            var returnTituloTesouroObject = (Titulo)returnTituloTesouro.Value;            
+            var returnTituloTesouroObject = (Titulo)returnTituloTesouro.Value!;            
             Titulo tituloTesouro = new Titulo { IdTitulo = new Guid("34d7d18b-27f8-4ed7-bfa7-5aa976d7a8e3"), NomeTitulo = "Tesouro Pré-Fixado Teste", IdTipoTitulo = 1, PosFixado = false, IdIndexador = 2, TaxaRendimento = 1 };
             
             //Assert
-            Assert.Equal(tituloTesouro.IdTitulo, returnTituloTesouroObject.IdTitulo);
-            Assert.Equal(tituloTesouro.NomeTitulo, returnTituloTesouroObject.NomeTitulo);
-            Assert.Equal(tituloTesouro.TaxaRendimento, returnTituloTesouroObject.TaxaRendimento);
-            Assert.Equal(tituloTesouro.IdIndexador, returnTituloTesouroObject.IdIndexador);
-            Assert.Equal(tituloTesouro.IdTitulo, returnTituloTesouroObject.IdTitulo);
-            Assert.Equal(tituloTesouro.PosFixado, returnTituloTesouroObject.PosFixado);
+            Assert.Equal(tituloTesouro.IdTitulo, returnTituloTesouroObject!.IdTitulo);
+            Assert.Equal(tituloTesouro.NomeTitulo, returnTituloTesouroObject!.NomeTitulo);
+            Assert.Equal(tituloTesouro.TaxaRendimento, returnTituloTesouroObject!.TaxaRendimento);
+            Assert.Equal(tituloTesouro.IdIndexador, returnTituloTesouroObject!.IdIndexador);
+            Assert.Equal(tituloTesouro.IdTitulo, returnTituloTesouroObject!.IdTitulo);
+            Assert.Equal(tituloTesouro.PosFixado, returnTituloTesouroObject!.PosFixado);
 
 
             //Act 
             var returnTituloCDB = (OkObjectResult)await tituloController.GetTituloById(new Guid("C2CCD2C3-2A9E-45A9-B407-3FDFE5D95FED"));
-            var returnTituloCDBObject = (Titulo)returnTituloCDB.Value;            
+            var returnTituloCDBObject = (Titulo)returnTituloCDB.Value!;            
             Titulo tituloCDB = new Titulo { IdTitulo = new Guid("C2CCD2C3-2A9E-45A9-B407-3FDFE5D95FED"), NomeTitulo = "CDB Teste", IdTipoTitulo = 3, PosFixado = true, IdIndexador = 2, TaxaRendimento = 108 };
             
             //Assert
-            Assert.Equal(tituloCDB.IdTitulo, returnTituloCDBObject.IdTitulo);
-            Assert.Equal(tituloCDB.NomeTitulo, returnTituloCDBObject.NomeTitulo);
-            Assert.Equal(tituloCDB.TaxaRendimento, returnTituloCDBObject.TaxaRendimento);
-            Assert.Equal(tituloCDB.IdIndexador, returnTituloCDBObject.IdIndexador);
-            Assert.Equal(tituloCDB.TaxaRendimento, returnTituloCDBObject.TaxaRendimento);
-            Assert.Equal(tituloCDB.IdTitulo, returnTituloCDBObject.IdTitulo);
-            Assert.Equal(tituloCDB.PosFixado, returnTituloCDBObject.PosFixado);
+            Assert.Equal(tituloCDB.IdTitulo, returnTituloCDBObject!.IdTitulo);
+            Assert.Equal(tituloCDB.NomeTitulo, returnTituloCDBObject!.NomeTitulo);
+            Assert.Equal(tituloCDB.TaxaRendimento, returnTituloCDBObject!.TaxaRendimento);
+            Assert.Equal(tituloCDB.IdIndexador, returnTituloCDBObject!.IdIndexador);
+            Assert.Equal(tituloCDB.TaxaRendimento, returnTituloCDBObject!.TaxaRendimento);
+            Assert.Equal(tituloCDB.IdTitulo, returnTituloCDBObject!.IdTitulo);
+            Assert.Equal(tituloCDB.PosFixado, returnTituloCDBObject!.PosFixado);
 
         }
 
@@ -823,7 +823,7 @@ namespace B3.Tests
 
             //Act
             var retorno = (OkObjectResult)await tituloController.GetTitulosRendaFixa();
-            var titulos = (List<Titulo>)retorno.Value;            
+            var titulos = (List<Titulo>)retorno.Value!;            
 
             //Assert
             Assert.Equal(2, titulos.Count);
@@ -848,7 +848,8 @@ namespace B3.Tests
 
             //Act
             var retorno = (OkObjectResult)await tituloController.GetTitulos();
-            var titulos = (List<Titulo>)retorno.Value;            
+            var titulos = (List<Titulo>)retorno.Value!;
+            
 
             //Assert
             Assert.Equal(3, titulos.Count);
