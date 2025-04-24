@@ -1,3 +1,4 @@
+using System.Diagnostics.Metrics;
 using B3.Application.Services;
 using B3.Domain.Models;
 using B3.Infra.Data.Context;
@@ -46,10 +47,10 @@ namespace B3.Tests
 
             if (!await databaseContext.descontoImpostoRendas!.AnyAsync())
             {
-                databaseContext.descontoImpostoRendas!.Add(new DescontoImpostoRenda { IdDescontoImpostoRenda = new Guid("08207917-5781-49bf-a06d-99d6d2d068d9"), Descricao = "'Até 06 meses'", QtdeMesesInicio = 0, QtdeMesesFim = 6, PercentualDesconto = (decimal)22.5 });
-                databaseContext.descontoImpostoRendas!.Add(new DescontoImpostoRenda { IdDescontoImpostoRenda = new Guid("eca52168-16a6-475b-ba15-b8bbe20568c2"), Descricao = "'Até 12 meses'", QtdeMesesInicio = 7, QtdeMesesFim = 12, PercentualDesconto = (decimal)20 });
-                databaseContext.descontoImpostoRendas!.Add(new DescontoImpostoRenda { IdDescontoImpostoRenda = new Guid("8ef1eec5-601b-467a-8d9d-e6f61d603520"), Descricao = "'Até 24 meses'", QtdeMesesInicio = 13, QtdeMesesFim = 24, PercentualDesconto = (decimal)17.5 });
-                databaseContext.descontoImpostoRendas!.Add(new DescontoImpostoRenda { IdDescontoImpostoRenda = new Guid("aee56080-6375-437e-b815-4df776d2ac7f"), Descricao = "'Acima de 24 meses'", QtdeMesesInicio = 25, QtdeMesesFim = null, PercentualDesconto = (decimal)15 });
+                databaseContext.descontoImpostoRendas!.Add(new DescontoImpostoRenda { IdDescontoImpostoRenda = new Guid("08207917-5781-49bf-a06d-99d6d2d068d9"), Descricao = "Até 06 meses", QtdeMesesInicio = 0, QtdeMesesFim = 6, PercentualDesconto = (decimal)22.5 });
+                databaseContext.descontoImpostoRendas!.Add(new DescontoImpostoRenda { IdDescontoImpostoRenda = new Guid("eca52168-16a6-475b-ba15-b8bbe20568c2"), Descricao = "Até 12 meses", QtdeMesesInicio = 7, QtdeMesesFim = 12, PercentualDesconto = (decimal)20 });
+                databaseContext.descontoImpostoRendas!.Add(new DescontoImpostoRenda { IdDescontoImpostoRenda = new Guid("8ef1eec5-601b-467a-8d9d-e6f61d603520"), Descricao = "Até 24 meses", QtdeMesesInicio = 13, QtdeMesesFim = 24, PercentualDesconto = (decimal)17.5 });
+                databaseContext.descontoImpostoRendas!.Add(new DescontoImpostoRenda { IdDescontoImpostoRenda = new Guid("aee56080-6375-437e-b815-4df776d2ac7f"), Descricao = "Acima de 24 meses", QtdeMesesInicio = 25, QtdeMesesFim = null, PercentualDesconto = (decimal)15 });
 
                 await databaseContext.SaveChangesAsync();
             }
@@ -807,6 +808,37 @@ namespace B3.Tests
 
 
         }
+
+        [Fact]
+        public async Task ShouldReturnListEntireDescontoImpostoRenda()
+        {
+            //AAA
+            //Arrange
+            AppDbContext appDbContext = await getDatabaseDbContext();            
+            DescontoImpostoRendaRepository descontoImpostoRendaRepository = new DescontoImpostoRendaRepository(appDbContext);
+            DescontoImpostoRendaService descontoImpostoRendaService = new DescontoImpostoRendaService(descontoImpostoRendaRepository);          
+
+
+            //Act
+            var tabelaIR = await descontoImpostoRendaService.GetDescontoImpostoRendas();
+            
+
+            //Assert
+            Assert.Equal(4, tabelaIR.Count);
+            Assert.Equal("Até 06 meses", tabelaIR[0].Descricao);
+            Assert.Equal((decimal)22.5, tabelaIR[0].PercentualDesconto);
+            Assert.Equal("Até 12 meses", tabelaIR[1].Descricao);
+            Assert.Equal((decimal)20, tabelaIR[1].PercentualDesconto);
+            Assert.Equal("Até 24 meses", tabelaIR[2].Descricao);
+            Assert.Equal((decimal)17.5, tabelaIR[2].PercentualDesconto);
+            Assert.Equal("Acima de 24 meses", tabelaIR[3].Descricao);
+            Assert.Equal((decimal)15, tabelaIR[3].PercentualDesconto);
+
+
+        }
         #endregion
+
+
+
     }
 }

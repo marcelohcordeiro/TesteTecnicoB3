@@ -20,7 +20,7 @@ namespace B3.Infra.Data.Repositories
 
         public async Task<List<DescontoImpostoRenda>> GetDescontoImpostoRendas()
         {
-            var x = await _context.descontoImpostoRendas!.ToListAsync();
+            var x = await _context.descontoImpostoRendas!.OrderBy(x => x.QtdeMesesInicio).ToListAsync();
             return x;
         }
     }
