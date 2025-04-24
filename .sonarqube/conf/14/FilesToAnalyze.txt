@@ -1,0 +1,11 @@
+﻿E:\TesteTecnicoB3\B3.Infra.Data\Configuration\DescontoImpostoRendaConfiguration.cs
+E:\TesteTecnicoB3\B3.Infra.Data\Configuration\IndexadorConfiguration.cs
+E:\TesteTecnicoB3\B3.Infra.Data\Configuration\TipoTituloConfiguration.cs
+E:\TesteTecnicoB3\B3.Infra.Data\Configuration\TituloConfiguration.cs
+E:\TesteTecnicoB3\B3.Infra.Data\Context\AppDbContext.cs
+E:\TesteTecnicoB3\B3.Infra.Data\Migrations\20250301194628_Initial.cs
+E:\TesteTecnicoB3\B3.Infra.Data\Migrations\20250301194628_Initial.Designer.cs
+E:\TesteTecnicoB3\B3.Infra.Data\Migrations\AppDbContextModelSnapshot.cs
+E:\TesteTecnicoB3\B3.Infra.Data\Repositories\DescontoImpostoRendaRepository.cs
+E:\TesteTecnicoB3\B3.Infra.Data\Repositories\TituloRepository.cs
+E:\TesteTecnicoB3\B3.Infra.Data\ServiceExtensions.cs
