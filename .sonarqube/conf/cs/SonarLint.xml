@@ -2,10 +2,6 @@
 <AnalysisInput>
   <Settings>
     <Setting>
-      <Key>sonar.cs.dotcover.reportsPaths</Key>
-      <Value>dotCover.Output.html</Value>
-    </Setting>
-    <Setting>
       <Key>sonar.cs.ignoreHeaderComments</Key>
       <Value>true</Value>
     </Setting>
@@ -28,6 +24,28 @@
   </Settings>
   <Rules>
     <Rule>
+      <Key>S2737</Key>
+    </Rule>
+    <Rule>
+      <Key>S2115</Key>
+    </Rule>
+    <Rule>
+      <Key>S2259</Key>
+    </Rule>
+    <Rule>
+      <Key>S6418</Key>
+      <Parameters>
+        <Parameter>
+          <Key>secretWords</Key>
+          <Value>api[_\-]?key, auth, credential, secret, token</Value>
+        </Parameter>
+        <Parameter>
+          <Key>randomnessSensibility</Key>
+          <Value>3</Value>
+        </Parameter>
+      </Parameters>
+    </Rule>
+    <Rule>
       <Key>S2479</Key>
     </Rule>
     <Rule>
@@ -47,9 +65,6 @@
     </Rule>
     <Rule>
       <Key>S1133</Key>
-    </Rule>
-    <Rule>
-      <Key>S2115</Key>
     </Rule>
     <Rule>
       <Key>S2245</Key>
@@ -104,9 +119,6 @@
     </Rule>
     <Rule>
       <Key>S1155</Key>
-    </Rule>
-    <Rule>
-      <Key>S2259</Key>
     </Rule>
     <Rule>
       <Key>S2629</Key>
@@ -305,19 +317,6 @@
     </Rule>
     <Rule>
       <Key>S2178</Key>
-    </Rule>
-    <Rule>
-      <Key>S6418</Key>
-      <Parameters>
-        <Parameter>
-          <Key>secretWords</Key>
-          <Value>api[_\-]?key, auth, credential, secret, token</Value>
-        </Parameter>
-        <Parameter>
-          <Key>randomnessSensibility</Key>
-          <Value>3</Value>
-        </Parameter>
-      </Parameters>
     </Rule>
     <Rule>
       <Key>S4159</Key>
@@ -731,9 +730,6 @@
     </Rule>
     <Rule>
       <Key>S2971</Key>
-    </Rule>
-    <Rule>
-      <Key>S2737</Key>
     </Rule>
     <Rule>
       <Key>S2612</Key>
